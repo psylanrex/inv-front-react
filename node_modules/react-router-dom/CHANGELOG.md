@@ -1,5 +1,65 @@
 # `react-router-dom`
 
+## 6.23.1
+
+### Patch Changes
+
+- Check for `document` existence when checking `startViewTransition` ([#11544](https://github.com/remix-run/react-router/pull/11544))
+- Change the `react-router-dom/server` import back to `react-router-dom` instead of `index.ts` ([#11514](https://github.com/remix-run/react-router/pull/11514))
+- Updated dependencies:
+  - `@remix-run/router@1.16.1`
+  - `react-router@6.23.1`
+
+## 6.23.0
+
+### Minor Changes
+
+- Add a new `unstable_dataStrategy` configuration option ([#11098](https://github.com/remix-run/react-router/pull/11098))
+  - This option allows Data Router applications to take control over the approach for executing route loaders and actions
+  - The default implementation is today's behavior, to fetch all loaders in parallel, but this option allows users to implement more advanced data flows including Remix single-fetch, middleware/context APIs, automatic loader caching, and more
+
+### Patch Changes
+
+- Updated dependencies:
+  - `@remix-run/router@1.16.0`
+  - `react-router@6.23.0`
+
+## 6.22.3
+
+### Patch Changes
+
+- Updated dependencies:
+  - `@remix-run/router@1.15.3`
+  - `react-router@6.22.3`
+
+## 6.22.2
+
+### Patch Changes
+
+- Updated dependencies:
+  - `@remix-run/router@1.15.2`
+  - `react-router@6.22.2`
+
+## 6.22.1
+
+### Patch Changes
+
+- Updated dependencies:
+  - `react-router@6.22.1`
+  - `@remix-run/router@1.15.1`
+
+## 6.22.0
+
+### Minor Changes
+
+- Include a `window__reactRouterVersion` tag for CWV Report detection ([#11222](https://github.com/remix-run/react-router/pull/11222))
+
+### Patch Changes
+
+- Updated dependencies:
+  - `@remix-run/router@1.15.0`
+  - `react-router@6.22.0`
+
 ## 6.21.3
 
 ### Patch Changes
