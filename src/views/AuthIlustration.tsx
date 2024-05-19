@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // import auth ilustration layout
 import AuthIlustrationLayout from "@/components/layouts/AuthIlustrationLayout";
@@ -23,6 +23,7 @@ export default function AuthIlustration() {
         <Route path="/forgot/*" element={<Forgot />} />
         <Route path="/confirm/*" element={<Confirm />} />
         <Route path="/change-password/*" element={<ChangePassword />} />
+        <Route path="/*" index element={<Navigate to="/login" />} />
       </Routes>
     </AuthIlustrationLayout>
   );

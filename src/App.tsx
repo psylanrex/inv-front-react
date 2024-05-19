@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // layouts
 import Admin from "@/views/Admin";
@@ -16,9 +16,11 @@ import ManageItems from "./routes/ManageItems";
 import Earnings from "./routes/Earnings";
 import Support from "./pages/support/Support";
 import Faq from "./pages/faq/Faq";
+import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
-const routes = [
-  { path: "/*", element: (isAuthenticated) => <Admin /> },
+const adminRoutes = [
+  { path: "/*", index: true, element: <Admin /> },
   { path: "/compact/*", element: <AdminCompact /> },
   { path: "/side-dark/*", element: <Sidedark /> },
   { path: "/auth/*", element: <Auth /> },
@@ -35,27 +37,33 @@ const routes = [
   { path: "/faq", element: <Faq /> },
 ];
 
+const loginRoutes = [
+  { path: "/*", index: true, element: <Navigate to="/auth/login" /> },
+  { path: "/auth/*", element: <AuthIlustration /> },
+];
+
+type RouteData = {
+  path: string;
+  index?: boolean;
+  element: React.ReactNode;
+};
+
 export default function App() {
+  const [routes, setRoutes] = useState<RouteData[]>([]);
+
+  useEffect(() => {
+    setRoutes(loginRoutes);
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
         {/* add routes with layouts */}
-        <Route path="/*" element={<Admin />} />
-        <Route path="/compact/*" element={<AdminCompact />} />
-        <Route path="/side-dark/*" element={<Sidedark />} />
-        <Route path="/auth/*" element={<Auth />} />
-        <Route path="/auth2/*" element={<AuthCover />} />
-        <Route path="/auth3/*" element={<AuthIlustration />} />
-        <Route path="/landing-page/*" element={<Landing />} />
-        <Route path="/maintenance/*" element={<Maintenance />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/purchase-orders/*" element={<PurchaseOrders />} />
-        <Route path="/invoices/*" element={<Invoices />} />
-        <Route path="/manage-items/*" element={<ManageItems />} />
-        <Route path="/earnings/*" element={<Earnings />} />
-        <Route path="/support" element={<Support />} />
-        <Route path="/faq" element={<Faq />} />
+        {routes.map((route, index) => (
+          <Route key={index} index={route.index} {...route} />
+        ))}
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

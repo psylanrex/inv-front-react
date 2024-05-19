@@ -20,8 +20,22 @@ import {
 } from "react-bootstrap-icons";
 import { Banner } from "@/components/widgets";
 import { SubmenuAccordion } from "@/components/reactdash-ui";
+import { logoData } from "@/utils/utils";
+import {
+  ENUM_SIDEBAR_COLOR,
+  ENUM_SIDEBAR_MODEL,
+  SIDEBAR_COLORS,
+  SIDEBAR_MODELS,
+} from "@/utils/utils.enum";
 
-export default function Sidebar({ closeMobile, ...props }) {
+type SidebarProps = {
+  closeMobile?: React.MouseEventHandler<HTMLAnchorElement>;
+  className?: string;
+  model?: keyof typeof ENUM_SIDEBAR_MODEL;
+  color?: keyof typeof ENUM_SIDEBAR_COLOR;
+};
+
+export default function Sidebar({ closeMobile, ...props }: SidebarProps) {
   // Data sidebar menu (props.data)
   const sideitems = [
     {
@@ -262,17 +276,10 @@ export default function Sidebar({ closeMobile, ...props }) {
     { id: 22, title: "Faq", url: "/faq", icon: <QuestionCircleFill /> },
   ];
   // logo (props.logo)
-  const logo = { img: "/img/logo.png", text: "Invitory" };
-  const models = {
-    compact: "sidebar-compact w-0 md:w-20",
-    default: "sidebar-area w-64",
-  };
-  const colors = {
-    dark: "dark",
-    light: "light",
-  };
-  const addmodel = props.model ? models[props.model] : "sidebar-area w-64";
-  const addcolor = props.color ? colors[props.color] : "";
+  const addmodel = props.model
+    ? SIDEBAR_MODELS[props.model]
+    : "sidebar-area w-64";
+  const addcolor = props.color ? SIDEBAR_COLORS[props.color] : "";
   const addClass = props.className ? `${props.className} ` : "";
 
   return (
@@ -282,24 +289,20 @@ export default function Sidebar({ closeMobile, ...props }) {
     >
       <div className="h-full bg-white dark:bg-gray-800 overflow-y-auto scrollbars">
         {/* logo */}
-        {logo ? (
-          <div className="mh-18 text-center py-5">
-            <h2 className="text-2xl font-semibold text-gray-200 px-4 max-h-9 overflow-hidden hidden-compact">
-              <img
-                className="inline-block w-8 h-8 ltr:mr-2 rtl:ml-2 -mt-1"
-                src={logo.img}
-              />
-              <span className="text-gray-700 dark:text-gray-200">
-                {logo.text}
-              </span>
-            </h2>
-            <h2 className="text-3xl font-semibold mx-auto logo-compact hidden">
-              <img className="inline-block w-8 h-8 -mt-1" src={logo.img} />
-            </h2>
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="mh-18 text-center py-5">
+          <h2 className="text-2xl font-semibold text-gray-200 px-4 max-h-9 overflow-hidden hidden-compact">
+            <img
+              className="inline-block w-8 h-8 ltr:mr-2 rtl:ml-2 -mt-1"
+              src={logoData.img}
+            />
+            <span className="text-gray-700 dark:text-gray-200">
+              {logoData.text}
+            </span>
+          </h2>
+          <h2 className="text-3xl font-semibold mx-auto logo-compact hidden">
+            <img className="inline-block w-8 h-8 -mt-1" src={logoData.img} />
+          </h2>
+        </div>
 
         {/* sidebar menu */}
         <ul

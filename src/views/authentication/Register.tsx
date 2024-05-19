@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BoxArrowInRight, Facebook, Twitter } from "react-bootstrap-icons";
+import { BoxArrowInRight } from "react-bootstrap-icons";
 import {
   Button,
   Heading,
@@ -18,9 +18,6 @@ export default function Register() {
     agree_text: "I agree to the Terms and Conditions",
     or: "Or",
     already: "Already have an account?",
-    join_fb: "Join with FB",
-    join_twitter: "Join with Twitter",
-    footer_copyright: "Tailnet | All right reserved",
   };
   const options = [
     { id: 123, value: "blues", title: "Blues" },
@@ -52,7 +49,7 @@ export default function Register() {
         <Radio options={options} name="music" checked="rock" label="Music" />
         <div className="mb-6">
           <label className="flex flex-row items-center">
-            <Checkbox name="tos" value="1" required="true" checked />
+            <Checkbox name="tos" value="1" required checked />
             <p className="ml-2">
               I agree to the <a href="#">Terms and Conditions</a>
             </p>
@@ -71,24 +68,6 @@ export default function Register() {
         <p className="text-center mb-3">
           <span>{register.or}</span>
         </p>
-        <div className="text-center mb-6 sm:space-x-4">
-          <a
-            className="p-2 block sm:inline-block rounded lg:rounded-full leading-5 text-gray-100 bg-indigo-900 border border-indigo-900 hover:text-white hover:opacity-90 hover:ring-0 hover:border-indigo-900 focus:bg-indigo-900 focus:border-indigo-800 focus:outline-none focus:ring-0 mb-3"
-            href="#"
-          >
-            <Facebook className="inline-block w-4 h-4 mx-1" />
-            <span className="inline-block lg:hidden">{register.join_fb}</span>
-          </a>
-          <a
-            className="p-2 block sm:inline-block rounded lg:rounded-full leading-5 text-gray-100 bg-indigo-500 border border-indigo-500 hover:text-white hover:bg-indigo-600 hover:ring-0 hover:border-indigo-600 focus:bg-indigo-600 focus:border-indigo-600 focus:outline-none focus:ring-0 mb-3"
-            href="#"
-          >
-            <Twitter className="inline-block w-4 h-4 mx-1" />
-            <span className="inline-block lg:hidden">
-              {register.join_twitter}
-            </span>
-          </a>
-        </div>
         <p className="text-center mb-4">
           {register.already}{" "}
           <Link to={register.link_login} className="hover:text-indigo-500">

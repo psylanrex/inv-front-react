@@ -4,7 +4,11 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import NavbarAdmin from "@/components/navbar/NavbarAdmin";
 import FooterAdmin from "@/components/footer/FooterAdmin";
 
-export default function AdminLayout(props) {
+type AdminLayoutProps = {
+  children: React.ReactNode;
+};
+
+export default function AdminLayout(props: AdminLayoutProps) {
   // set toggle
   const [isToggle, setToggle] = useState(false);
   // close sidebar menu if screen < 768

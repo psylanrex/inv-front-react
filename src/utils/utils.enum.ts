@@ -541,3 +541,56 @@ export const INPUT_LABEL_SIZES = {
   [ENUM_INPUT_LABEL_SIZE.medium]: "py-2 px-4",
   [ENUM_INPUT_LABEL_SIZE.large]: "py-3 px-6",
 };
+
+export enum ENUM_LOGO_COLOR {
+  dark = "dark",
+  light = "light",
+  dark_light = "dark_light",
+  light_dark = "light_dark",
+}
+
+export const LOGO_COLORS = {
+  [ENUM_LOGO_COLOR.dark]: "text-gray-700",
+  [ENUM_LOGO_COLOR.light]: "text-gray-200",
+  [ENUM_LOGO_COLOR.dark_light]: "text-gray-700 dark:text-gray-200",
+  [ENUM_LOGO_COLOR.light_dark]: "text-gray-200 dark:text-gray-700",
+};
+
+export enum ENUM_SIDEBAR_MODEL {
+  compact = "compact",
+  default = "default",
+}
+
+export const SIDEBAR_MODELS = {
+  [ENUM_SIDEBAR_MODEL.compact]: "sidebar-compact w-0 md:w-20",
+  [ENUM_SIDEBAR_MODEL.default]: "sidebar-area w-64",
+};
+
+export enum ENUM_SIDEBAR_COLOR {
+  dark = "dark",
+  light = "light",
+}
+
+export const SIDEBAR_COLORS = {
+  [ENUM_SIDEBAR_COLOR.dark]: "dark",
+  [ENUM_SIDEBAR_COLOR.light]: "light",
+};
+
+export const INPUT_PASSWORD_SHAPES = {
+  [ENUM_SHAPE.rounded]: "rounded",
+  [ENUM_SHAPE.square]: "rounded-none",
+  [ENUM_SHAPE.pill]: "rounded-3xl",
+  [ENUM_SHAPE.circle]: "rounded-full !p-2.5",
+};
+
+export enum ENUM_INPUT_PASSWORD_SIZE {
+  small = "small",
+  medium = "medium",
+  large = "large",
+}
+
+export const INPUT_PASSWORD_SIZES = {
+  [ENUM_INPUT_PASSWORD_SIZE.small]: "py-1 px-2.5 text-sm",
+  [ENUM_INPUT_PASSWORD_SIZE.medium]: "py-2 px-4",
+  [ENUM_INPUT_PASSWORD_SIZE.large]: "py-3 px-6",
+};

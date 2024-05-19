@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { BoxArrowInRight, Facebook, Twitter } from "react-bootstrap-icons";
+import { Link, useSearchParams } from "react-router-dom";
+import { BoxArrowInRight } from "react-bootstrap-icons";
 import {
   Button,
   Heading,
@@ -7,19 +7,37 @@ import {
   InputLabel,
   InputPassword,
 } from "@/components/reactdash-ui";
+import { useForm } from "react-hook-form";
+import { authImpersonate } from "@/api/auth";
+import to from "await-to-js";
+import { toast } from "react-toastify";
+import { saveAccessToken } from "@/utils/utils";
+
+type FormData = {
+  user_name: string;
+  password: string;
+};
 
 export default function Login() {
+  const [searchParams] = useSearchParams();
+  const { register, handleSubmit } = useForm<FormData>();
+
   const logins = {
     login: "Login",
-    link_login: "/auth2/login",
-    forgot_link: "/auth2/forgot",
+    forgot_link: "/auth/forgot",
     register: "Register",
-    register_link: "/auth2/register",
-    remember: "Remember me",
-    or: "Or",
+    register_link: "/auth/register",
     dont: "Dont have an account?",
-    login_fb: "Login with FB",
-    login_twitter: "Login with Twitter",
+    or: "Or",
+  };
+
+  const onSubmit = async (data: FormData) => {
+    const [err, res]: any = await to(
+      authImpersonate({ ...data, vendor_id: searchParams.get("vendor_id")! })
+    );
+    if (err) return toast.error(err?.response?.data?.message);
+
+    if (res.token) saveAccessToken(res.token);
   };
 
   return (
@@ -28,8 +46,13 @@ export default function Login() {
         Login
       </Heading>
       <hr className="block w-12 h-0.5 mx-auto my-5 bg-gray-700 border-gray-700" />
-      <form>
-        <InputLabel type="email" name="email" label="Email" />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InputLabel
+          label="Username"
+          required
+          placeholder="Enter username"
+          {...register("user_name")}
+        />
         <div className="mb-4">
           <div className="flex flex-row justify-between items-center mb-2">
             <label htmlFor="inputpass" className="inline-block">
@@ -39,7 +62,11 @@ export default function Login() {
               Forgot password?
             </Link>
           </div>
-          <InputPassword type="password" name="password" />
+          <InputPassword
+            required
+            placeholder="Enter password"
+            {...register("password")}
+          />
         </div>
         <Checkbox name="remember" label="Remember me" value="1" checked />
 
@@ -55,24 +82,6 @@ export default function Login() {
         <p className="text-center mb-3">
           <span>{logins.or}</span>
         </p>
-        <div className="text-center mb-6 sm:space-x-4">
-          <a
-            className="p-2 block sm:inline-block rounded lg:rounded-full leading-5 text-gray-100 bg-indigo-900 border border-indigo-900 hover:text-white hover:opacity-90 hover:ring-0 hover:border-indigo-900 focus:bg-indigo-900 focus:border-indigo-800 focus:outline-none focus:ring-0 mb-3"
-            href="#"
-          >
-            <Facebook className="inline-block w-4 h-4 mx-1" />
-            <span className="inline-block lg:hidden">{logins.login_fb}</span>
-          </a>
-          <a
-            className="p-2 block sm:inline-block rounded lg:rounded-full leading-5 text-gray-100 bg-indigo-500 border border-indigo-500 hover:text-white hover:bg-indigo-600 hover:ring-0 hover:border-indigo-600 focus:bg-indigo-600 focus:border-indigo-600 focus:outline-none focus:ring-0 mb-3"
-            href="#"
-          >
-            <Twitter className="inline-block w-4 h-4 mx-1" />
-            <span className="inline-block lg:hidden">
-              {logins.login_twitter}
-            </span>
-          </a>
-        </div>
         <p className="text-center mb-4">
           {logins.dont}{" "}
           <Link to={logins.register_link} className="hover:text-indigo-500">

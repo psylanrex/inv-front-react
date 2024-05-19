@@ -1,7 +1,11 @@
 import NavbarLogin from "@/components/navbar/NavbarLogin";
 import Footer from "@/components/footer/Footer";
 
-export default function AuthLayout(props) {
+type AuthLayoutProps = {
+  children: React.ReactNode;
+};
+
+export default function AuthLayout(props: AuthLayoutProps) {
   return (
     <>
       <NavbarLogin />
