@@ -1,6 +1,17 @@
 import { Tab } from "@headlessui/react";
 
-export default function Tabs(props) {
+type TabData = {
+  title: string;
+  description: string;
+};
+
+type TabProps = {
+  className?: string;
+  model?: "vertical";
+  data: TabData[];
+};
+
+export default function Tabs(props: TabProps) {
   // props ( data, model, className )
   const tabitem = props.data;
   const model = props.model;

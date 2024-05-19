@@ -5,7 +5,30 @@ import { EnvelopeOpen, EnvelopeSlash } from "react-bootstrap-icons";
 import { Notif } from "@/components/reactdash-ui";
 import TimeAgo from "react-timeago";
 
-export default function DropdownMessage(props) {
+type DropdownMessageData = {
+  id: number;
+  name: string;
+  msg: string;
+  time: string;
+  img: string;
+  url: string;
+  read: boolean;
+};
+
+type DropdownMessageProps = {
+  data: DropdownMessageData[];
+  data_text: {
+    title: string;
+    noMsg: string;
+    notificon: React.ReactNode;
+    new_icon: React.ReactNode;
+    new_url: string;
+    footer_text: string;
+    footer_url: string;
+  };
+};
+
+export default function DropdownMessage(props: DropdownMessageProps) {
   // Data messages
   const allmessages = props.data;
   // Sort messages

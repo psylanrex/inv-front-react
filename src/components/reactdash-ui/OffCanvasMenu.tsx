@@ -2,45 +2,54 @@ import { useState } from "react";
 import { List } from "react-bootstrap-icons";
 import { SubmenuAccordion } from "@/components/reactdash-ui";
 import Logo from "@/components/navbar/Logo";
+import {
+  ENUM_OFF_CANVAS_COLOR,
+  ENUM_OFF_CANVAS_PLACEMENTS,
+  OFF_CANVAS_COLORS,
+  OFF_CANVAS_PLACEMENTS,
+  OFF_CANVAS_PLACEMENTS_TWO,
+} from "@/utils/utils.enum";
 
-export default function OffCanvasMenu(props) {
+type OffCanvasMenuContent = {
+  text: string;
+  logo: string;
+  logo_text?: string;
+};
+
+type OffCanvasMenuData = {
+  id: number;
+  title: string;
+  url: string;
+};
+
+type OffCanvasMenuProps = {
+  className?: string;
+  color?: keyof typeof ENUM_OFF_CANVAS_COLOR;
+  placement?: keyof typeof ENUM_OFF_CANVAS_PLACEMENTS;
+  content: OffCanvasMenuContent;
+  data: OffCanvasMenuData[];
+};
+
+export default function OffCanvasMenu(props: OffCanvasMenuProps) {
   // set toggle
   const [isToggle, setToggle] = useState(false);
   function closeCanvas() {
     setToggle(false);
   }
-  // colors
-  const colors = {
-    light: "text-gray-300 hover:text-gray-100",
-    dark: "text-gray-800 hover:text-gray-700",
-    light_dark:
-      "text-gray-300 hover:text-gray-100 dark:text-gray-800 dark:hover:text-gray-700",
-    dark_light:
-      "text-gray-800 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100",
-  };
-  // placement
-  const placements = {
-    left: "left-0",
-    right: "right-0",
-  };
-  const placementstwo = {
-    left: "-left-64",
-    right: "-right-64",
-  };
 
   // props ( logo, copyright, data )
   const copyright = props.content.text;
   const addcolor = props.color
-    ? colors[props.color]
-    : "text-gray-800 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100";
+    ? OFF_CANVAS_COLORS[props.color]
+    : OFF_CANVAS_COLORS[ENUM_OFF_CANVAS_COLOR.dark_light];
   const listmenu = props.data;
 
   const addplacement = props.placement
-    ? placements[props.placement]
-    : "right-0";
+    ? OFF_CANVAS_PLACEMENTS[props.placement]
+    : OFF_CANVAS_PLACEMENTS[ENUM_OFF_CANVAS_PLACEMENTS.right];
   const addplacementtwo = props.placement
-    ? placementstwo[props.placement]
-    : "-right-64";
+    ? OFF_CANVAS_PLACEMENTS_TWO[props.placement]
+    : OFF_CANVAS_PLACEMENTS_TWO[ENUM_OFF_CANVAS_PLACEMENTS.right];
 
   return (
     <div>

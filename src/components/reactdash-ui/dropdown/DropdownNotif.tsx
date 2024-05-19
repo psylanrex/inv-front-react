@@ -5,7 +5,28 @@ import { Trash, BellSlash } from "react-bootstrap-icons";
 import TimeAgo from "react-timeago";
 import { Notif } from "@/components/reactdash-ui";
 
-export default function DropdownNotif(props) {
+type DropdownNotifData = {
+  id: number;
+  title: string;
+  msg: string;
+  time: string;
+  icon: React.ReactNode;
+  url: string;
+  read: boolean;
+};
+
+type DropdownNotifProps = {
+  data: DropdownNotifData[];
+  data_text: {
+    title: string;
+    noNotif: string;
+    notificon: React.ReactNode;
+    footer_text: string;
+    footer_url: string;
+  };
+};
+
+export default function DropdownNotif(props: DropdownNotifProps) {
   // Data notif
   const allnotif = props.data;
   // Head & footer dropdown text and link

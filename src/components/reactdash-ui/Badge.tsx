@@ -2,7 +2,7 @@ import {
   BADGE_COLORS,
   ENUM_COLOR,
   ENUM_SHAPE,
-  SHAPES,
+  BADGE_SHAPES,
 } from "@/utils/utils.enum";
 
 type BadgeProps = {
@@ -14,7 +14,7 @@ type BadgeProps = {
 
 export default function Badge(props: BadgeProps) {
   // props ( shape, color, className )
-  const addshape = props.shape ? SHAPES[props.shape] : "rounded";
+  const addshape = props.shape ? BADGE_SHAPES[props.shape] : "rounded";
   const addcolor = props.color
     ? BADGE_COLORS[props.color]
     : BADGE_COLORS[ENUM_COLOR.light];

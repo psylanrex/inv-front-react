@@ -1,11 +1,30 @@
 import { Link } from "react-router-dom";
 
+// @ts-ignore
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 // Splide
 import "@splidejs/react-splide/css";
 import "@splidejs/react-splide/css/core";
 
-export default function Slider(props) {
+type SliderData = {
+  img: string;
+  title: string;
+  url: string;
+};
+
+type SliderProps = {
+  title: string;
+  className?: string;
+  data: SliderData[];
+  options?: {
+    type: string;
+    breakpoints?: any;
+    gap?: string;
+    perPage?: string;
+  };
+};
+
+export default function Slider(props: SliderProps) {
   // props ( title, options, data )
   const title = props.title;
   const default_opt = { type: "loop", perPage: "1", gap: "1rem" };

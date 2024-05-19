@@ -1,62 +1,42 @@
 import { Currency } from "@/components/reactdash-ui";
+import {
+  PROGRESS_COLOR_STROKES_BG,
+  ENUM_COLOR,
+  PROGRESS_COLORS,
+  PROGRESS_COLORS_BG,
+  PROGRESS_COLORS_TROKES,
+} from "@/utils/utils.enum";
 
-export default function Progress(props) {
+type ProgressProps = {
+  className?: string;
+  percent: number;
+  type?: "currency";
+  model: "circle" | "vertical" | "horizontal";
+  data?: number;
+  color?: keyof typeof ENUM_COLOR;
+};
+
+export default function Progress(props: ProgressProps) {
   // Progress percent
   const percent = props.percent + "%";
   const addClass = props.className ? ` ${props.className}` : "";
   const CustomValue = props.data;
   const typeProgress = props.type;
   const addCustom = props.data ? ` custom-after` : "";
-  // colors
-  const colorsbg = {
-    primary: "bg-indigo-100",
-    secondary: "bg-pink-100",
-    success: "bg-green-100",
-    warning: "bg-yellow-100",
-    danger: "bg-red-100",
-    info: "bg-cyan-100",
-    light: "bg-gray-100",
-    dark: "bg-zinc-100",
-  };
-  const colors = {
-    primary: "bg-indigo-500",
-    secondary: "bg-pink-500",
-    success: "bg-green-500",
-    warning: "bg-yellow-500",
-    danger: "bg-red-500",
-    info: "bg-cyan-500",
-    light: "bg-gray-500",
-    dark: "bg-zinc-500",
-  };
-  const colorstrokesbg = {
-    primary: "stroke-indigo-100",
-    secondary: "stroke-pink-100",
-    success: "stroke-green-100",
-    warning: "stroke-yellow-100",
-    danger: "stroke-red-100",
-    info: "stroke-cyan-100",
-    light: "stroke-gray-100",
-    dark: "stroke-zinc-100",
-  };
-  const colorstrokes = {
-    primary: "stroke-indigo-500",
-    secondary: "stroke-pink-500",
-    success: "stroke-green-500",
-    warning: "stroke-yellow-500",
-    danger: "stroke-red-500",
-    info: "stroke-cyan-500",
-    light: "stroke-gray-500",
-    dark: "stroke-zinc-500",
-  };
+
   // Props ( color, model, percent, className )
-  const addcolor = props.color ? colors[props.color] : "bg-indigo-500";
-  const addcolorbg = props.color ? colorsbg[props.color] : "bg-indigo-100";
+  const addcolor = props.color
+    ? PROGRESS_COLORS[props.color]
+    : PROGRESS_COLORS[ENUM_COLOR.primary];
+  const addcolorbg = props.color
+    ? PROGRESS_COLORS_BG[props.color]
+    : PROGRESS_COLORS_BG[ENUM_COLOR.primary];
   const addcolorstroke = props.color
-    ? colorstrokes[props.color]
-    : "stroke-indigo-500";
+    ? PROGRESS_COLORS_TROKES[props.color]
+    : PROGRESS_COLORS_TROKES[ENUM_COLOR.primary];
   const addcolorstrokebg = props.color
-    ? colorstrokesbg[props.color]
-    : "stroke-indigo-100";
+    ? PROGRESS_COLOR_STROKES_BG[props.color]
+    : PROGRESS_COLOR_STROKES_BG[ENUM_COLOR.primary];
 
   // model
   const model = props.model;
@@ -83,7 +63,7 @@ export default function Progress(props) {
         >
           <svg
             className="absolute w-36 h-36"
-            viewport="0 0 70 70"
+            viewBox="0 0 70 70"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
           >

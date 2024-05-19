@@ -1,40 +1,37 @@
+import {
+  ENUM_OFF_CANVAS_COLOR,
+  ENUM_OFF_CANVAS_PLACEMENTS,
+  OFF_CANVAS_COLORS,
+  OFF_CANVAS_PLACEMENTS,
+  OFF_CANVAS_PLACEMENTS_TWO,
+} from "@/utils/utils.enum";
 import { useState } from "react";
 import { List } from "react-bootstrap-icons";
 
-export default function OffCanvas(props) {
+type OffCanvasProps = {
+  className?: string;
+  children?: React.ReactNode;
+  color?: keyof typeof ENUM_OFF_CANVAS_COLOR;
+  placement?: keyof typeof ENUM_OFF_CANVAS_PLACEMENTS;
+};
+
+export default function OffCanvas(props: OffCanvasProps) {
   // set toggle
   const [isToggle, setToggle] = useState(false);
   function closeCanvas() {
     setToggle(false);
   }
-  // colors
-  const colors = {
-    light: "text-gray-300 hover:text-gray-100",
-    dark: "text-gray-800 hover:text-gray-700",
-    light_dark:
-      "text-gray-300 hover:text-gray-100 dark:text-gray-800 dark:hover:text-gray-700",
-    dark_light:
-      "text-gray-800 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100",
-  };
-  // placement
-  const placements = {
-    left: "left-0",
-    right: "right-0",
-  };
-  const placementstwo = {
-    left: "-left-64",
-    right: "-right-64",
-  };
+
   // Props ( placement )
   const addplacement = props.placement
-    ? placements[props.placement]
-    : "right-0";
+    ? OFF_CANVAS_PLACEMENTS[props.placement]
+    : OFF_CANVAS_PLACEMENTS[ENUM_OFF_CANVAS_PLACEMENTS.right];
   const addcolor = props.color
-    ? colors[props.color]
-    : "text-gray-800 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100";
+    ? OFF_CANVAS_COLORS[props.color]
+    : OFF_CANVAS_COLORS[ENUM_OFF_CANVAS_COLOR.dark_light];
   const addplacementtwo = props.placement
-    ? placementstwo[props.placement]
-    : "-right-64";
+    ? OFF_CANVAS_PLACEMENTS_TWO[props.placement]
+    : OFF_CANVAS_PLACEMENTS_TWO[ENUM_OFF_CANVAS_PLACEMENTS.right];
 
   return (
     <div>

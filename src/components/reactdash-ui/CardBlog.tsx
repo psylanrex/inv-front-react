@@ -1,7 +1,19 @@
 import { Calendar } from "react-bootstrap-icons";
 import { Card } from "@/components/reactdash-ui";
 
-function CardBlog(props) {
+type CardBlogData = {
+  img: string;
+  title: string;
+  date: string;
+  description: string;
+};
+
+type CardBlogProps = {
+  className?: string;
+  data: CardBlogData;
+};
+
+export default function CardBlog(props: CardBlogProps) {
   // Props
   const data_blog = props.data;
   // Props className
@@ -29,5 +41,3 @@ function CardBlog(props) {
     </Card>
   );
 }
-
-export default CardBlog;

@@ -1,8 +1,21 @@
 import { ChevronDown } from "react-bootstrap-icons";
 import { NavLink } from "react-router-dom";
 import { Disclosure, Transition } from "@headlessui/react";
+import React from "react";
 
-export default function Submenu(props) {
+type SubmenuData = {
+  id: number;
+  title: string;
+  url: string;
+  icon?: React.ReactNode;
+  submenu?: SubmenuData[];
+};
+
+type SubmenuProps = {
+  data: SubmenuData[];
+};
+
+export default function Submenu(props: SubmenuProps) {
   // Props sidebar menu
   const menu = props.data;
 
@@ -51,7 +64,7 @@ export default function Submenu(props) {
                       as="ul"
                       className="block rounded rounded-t-none top-full z-50 ltr:pl-6 rtl:pr-6 py-0.5 ltr:text-left rtl:text-right mb-1 font-normal"
                     >
-                      {menuitem.submenu.map((submenuitem) => {
+                      {menuitem.submenu?.map((submenuitem) => {
                         return (
                           <li key={submenuitem.id}>
                             <NavLink

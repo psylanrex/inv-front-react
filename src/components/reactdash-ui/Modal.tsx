@@ -2,8 +2,17 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { X } from "react-bootstrap-icons";
 import { Button } from "@/components/reactdash-ui";
+import { ENUM_BUTTON_COLOR } from "@/utils/utils.enum";
 
-export default function Modal(props) {
+type ModalProps = {
+  className?: string;
+  children?: React.ReactNode;
+  title: string;
+  btn_color?: keyof typeof ENUM_BUTTON_COLOR;
+  btn_text?: string;
+};
+
+export default function Modal(props: ModalProps) {
   // Props ( btn_text, btn_color, title )
   let [isOpen, setIsOpen] = useState(false);
   // close

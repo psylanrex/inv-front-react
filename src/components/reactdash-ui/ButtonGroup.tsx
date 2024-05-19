@@ -1,12 +1,15 @@
-export default function ButtonGroup(props) {
-  // group style
-  const directions = {
-    vertical: "btn-group-vertical flex-col",
-    horizontal: "btn-group-horizontal flex-row",
-  };
+import { BUTTON_DIRECTIONS, ENUM_DIRECTION } from "@/utils/utils.enum";
+
+type ButtonGroupProps = {
+  className?: string;
+  children?: React.ReactNode;
+  direction?: keyof typeof ENUM_DIRECTION;
+};
+
+export default function ButtonGroup(props: ButtonGroupProps) {
   // Props ( direction, className )
   const adddirection = props.direction
-    ? directions[props.direction]
+    ? BUTTON_DIRECTIONS[props.direction]
     : "btn-group-horizontal inline-flex flex-row";
   const addClass = props.className ? `${props.className}` : "";
 

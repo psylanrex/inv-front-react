@@ -1,4 +1,9 @@
-export default function Lists(props) {
+type ListsProps = {
+  children: React.ReactNode;
+  variant?: "ol";
+};
+
+export default function Lists(props: ListsProps) {
   return (
     <>
       {props.variant === "ol" ? (

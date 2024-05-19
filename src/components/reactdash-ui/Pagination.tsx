@@ -1,23 +1,42 @@
 import { useState, useEffect } from "react";
 import { Tooltip } from "@/components/reactdash-ui";
+import {
+  ENUM_PAGINATION_PLACEMENTS,
+  PAGINATION_PLACEMENTS,
+} from "@/utils/utils.enum";
 
-export default function Pagination(props) {
+type PaginationProps = {
+  className?: string;
+  totalData: number;
+  perPage: number;
+  onPageChanged: (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    page: number
+  ) => void;
+  currentPage: number;
+  placement?: keyof typeof ENUM_PAGINATION_PLACEMENTS;
+};
+
+const range = (from: number, to: number, step = 1) => {
+  let i = from;
+  const range = [];
+
+  while (i <= to) {
+    range.push(i);
+    i += step;
+  }
+
+  return range;
+};
+
+export default function Pagination(props: PaginationProps) {
   // Props ( totalData, perPage, onPageChanged, currentPage , placement, className )
   const left_nav = "left";
   const right_nav = "right";
-  const range = (from, to, step = 1) => {
-    let i = from;
-    const range = [];
 
-    while (i <= to) {
-      range.push(i);
-      i += step;
-    }
-
-    return range;
-  };
   const { totalData, perPage, onPageChanged, currentPage } = props;
   const [totalPages, setTotalPages] = useState(0);
+
   useEffect(() => {
     setTotalPages(Math.ceil(totalData / perPage));
   }, [setTotalPages]);
@@ -52,16 +71,12 @@ export default function Pagination(props) {
     }
     return range(1, totalPages);
   };
+
   const pages = fetchPageNumbers() || [];
 
-  // placement
-  const placements = {
-    left: "justify-start",
-    right: "justify-end",
-  };
   const addplacement = props.placement
-    ? placements[props.position]
-    : "justify-center";
+    ? PAGINATION_PLACEMENTS[props.placement]
+    : PAGINATION_PLACEMENTS[ENUM_PAGINATION_PLACEMENTS.center];
   const addClass = props.className ? ` ${props.className}` : "";
 
   return (
@@ -110,7 +125,7 @@ export default function Pagination(props) {
               <a
                 className="block relative py-3 px-4 bg-white border border-gray-200 hover:bg-indigo-100 hover:text-indigo-500 -mr-0.5 dark:bg-gray-800 dark:border-gray-700"
                 href="/"
-                onClick={(e) => onPageChanged(e, page)}
+                onClick={(e) => onPageChanged(e, page as number)}
               >
                 {page}
               </a>

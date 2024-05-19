@@ -3,8 +3,24 @@ import { useState } from "react";
 import { ChevronDown } from "react-bootstrap-icons";
 import { useLocation, NavLink } from "react-router-dom";
 
-export default function SubmenuAccordion({ closeMobile, ...props }) {
-  const [isOpen, setOpen] = useState(null);
+type SubmenuAccordionData = {
+  id: number;
+  title: string;
+  url: string;
+  icon?: React.ReactNode;
+  submenu?: SubmenuAccordionData[];
+};
+
+type SubmenuAccordionProps = {
+  closeMobile?: React.MouseEventHandler<HTMLAnchorElement>;
+  data: SubmenuAccordionData[];
+};
+
+export default function SubmenuAccordion({
+  closeMobile,
+  ...props
+}: SubmenuAccordionProps) {
+  const [isOpen, setOpen] = useState<number>(0);
   const [isActive, setActive] = useState(true);
   // Data Sidebar menu
   const menu = props.data;
@@ -18,7 +34,7 @@ export default function SubmenuAccordion({ closeMobile, ...props }) {
 
         // open close accordion
         function openAbb() {
-          isActive === true ? setOpen(false) : setOpen(index);
+          isActive === true ? setOpen(0) : setOpen(index);
           setActive(false);
         }
         function openAcc() {
@@ -26,14 +42,14 @@ export default function SubmenuAccordion({ closeMobile, ...props }) {
           setActive(false);
         }
         function closeAcc() {
-          setOpen(null);
+          setOpen(0);
           setActive(false);
         }
         const Toggler = showContent ? closeAcc : openAcc;
         const Toggles = showContent ? closeAcc : openAbb;
 
         // active dropdown
-        const getNavLinkClass = (path) => {
+        const getNavLinkClass = (path: string) => {
           return location.pathname.includes(path) ? isActive : "";
         };
 

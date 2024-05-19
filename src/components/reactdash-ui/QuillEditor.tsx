@@ -2,14 +2,19 @@ import { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const QuillEditor = ({ value, onChange }) => {
+type QuillEditorProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+const QuillEditor = ({ value, onChange }: QuillEditorProps) => {
   const [text, setText] = useState(value || "");
 
   useEffect(() => {
     setText(value);
   }, [value]);
 
-  const handleChange = (value) => {
+  const handleChange = (value: string) => {
     setText(value);
     if (onChange) {
       onChange(value);

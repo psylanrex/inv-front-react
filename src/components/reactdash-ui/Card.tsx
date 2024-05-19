@@ -1,5 +1,10 @@
+type CardProps = {
+  className?: string;
+  children?: React.ReactNode;
+};
+
 // Card
-export default function Card(props) {
+export default function Card(props: CardProps) {
   // Props className
   const addClass = props.className ? `${props.className}` : "";
 

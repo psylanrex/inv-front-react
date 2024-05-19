@@ -3,7 +3,7 @@ import { Button, Dropdown, OffCanvasMenu } from "@/components/reactdash-ui";
 import Logo from "@/components/navbar/Logo";
 import { Link } from "react-router-dom";
 
-export default function NavbarLanding(props) {
+export default function NavbarLanding() {
   // logo & list menu
   const content = {
     logo: "/img/logo.png",

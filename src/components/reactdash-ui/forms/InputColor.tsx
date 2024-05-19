@@ -1,4 +1,15 @@
-export default function InputColor(props) {
+type InputColorProps = {
+  className?: string;
+  id?: string;
+  label?: string;
+  name?: string;
+  value?: string | number | readonly string[];
+  disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+};
+
+export default function InputColor(props: InputColorProps) {
   const addClass = props.className ? `${props.className} ` : "";
 
   return (

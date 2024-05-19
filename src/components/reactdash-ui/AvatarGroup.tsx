@@ -1,4 +1,9 @@
-import { ENUM_SHAPE, ENUM_SIZE, SHAPES, SIZES } from "@/utils/utils.enum";
+import {
+  ENUM_SHAPE,
+  ENUM_SIZE,
+  AVATAR_SHAPES,
+  AVATAR_SIZES,
+} from "@/utils/utils.enum";
 import { Link } from "react-router-dom";
 
 type AvatarGroupData = {
@@ -24,9 +29,11 @@ export default function AvatarGroup(props: AvatarGroupProps) {
 
   // props ( shape, className )
   const addshape = props.shape
-    ? SHAPES[props.shape]
-    : SHAPES[ENUM_SHAPE.circle];
-  const addSize = props.size ? SIZES[props.size] : SIZES[ENUM_SIZE.small];
+    ? AVATAR_SHAPES[props.shape]
+    : AVATAR_SHAPES[ENUM_SHAPE.circle];
+  const addSize = props.size
+    ? AVATAR_SIZES[props.size]
+    : AVATAR_SIZES[ENUM_SIZE.small];
   const addClass = props.className ? ` ${props.className}` : "";
 
   return (

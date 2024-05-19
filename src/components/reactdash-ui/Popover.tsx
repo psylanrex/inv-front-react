@@ -1,40 +1,47 @@
 import { useState } from "react";
 import { Button } from "@/components/reactdash-ui";
+import {
+  ENUM_POPOVER_ALIGNS,
+  ENUM_POPOVER_PLACEMENTS,
+  POPOVER_ALIGNS,
+  POPOVER_PLACEMENTS,
+} from "@/utils/utils.enum";
 
-export default function Popover(props) {
+type PopoverProps = {
+  className?: string;
+  title?: string;
+  description?: string;
+  btn_text: string;
+  placement?: keyof typeof ENUM_POPOVER_PLACEMENTS;
+  align?: keyof typeof ENUM_POPOVER_ALIGNS;
+};
+
+export default function Popover(props: PopoverProps) {
   // set toggle
   const [isTogglepop, setTogglepop] = useState(false);
-  // placement
-  const placements = {
-    top: "top-auto bottom-full mb-3",
-    bottom: "top-full bottom-auto mt-3",
-  };
+
   const carets = {
-    top: "border-l border-b bottom-0 -mb-1.5 bg-white dark:bg-gray-900",
-    bottom: `border-r border-t top-0 -mt-1.5 ${
+    [ENUM_POPOVER_PLACEMENTS.top]:
+      "border-l border-b bottom-0 -mb-1.5 bg-white dark:bg-gray-900",
+    [ENUM_POPOVER_PLACEMENTS.bottom]: `border-r border-t top-0 -mt-1.5 ${
       props.title ? "bg-gray-100 dark:bg-black" : "bg-white dark:bg-gray-900"
     }`,
   };
-  const aligns = {
-    left: "text-left",
-    center: "text-center",
-    right: "text-right",
-  };
+
   // Props ( placement, align )
   const addplacement = props.placement
-    ? placements[props.placement]
-    : "top-auto bottom-full mb-3";
+    ? POPOVER_PLACEMENTS[props.placement]
+    : POPOVER_PLACEMENTS[ENUM_POPOVER_PLACEMENTS.top];
   const addcaret = props.placement
     ? carets[props.placement]
-    : "border-l border-b bottom-0 -mb-1.5 bg-white dark:bg-gray-900";
-  const addalign = props.align ? aligns[props.align] : "text-left";
+    : carets[ENUM_POPOVER_PLACEMENTS.top];
+  const addalign = props.align ? POPOVER_ALIGNS[props.align] : "text-left";
   const addClass = props.className ? `${props.className}` : "relative";
 
   return (
     <div className="relative inline-block mb-3">
       <Button
         onClick={() => setTogglepop(!isTogglepop)}
-        variant={props.btn_variant}
         className={`${addClass}`}
       >
         {props.btn_text}

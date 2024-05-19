@@ -1,7 +1,14 @@
+import { ENUM_COLOR, PRELOADER_COLORS } from "@/utils/utils.enum";
 import { useState, useEffect } from "react";
 
+type PreloaderProps = {
+  className?: string;
+  children?: React.ReactNode;
+  color?: keyof typeof ENUM_COLOR;
+};
+
 // Preloader
-export default function Preloader(props) {
+export default function Preloader(props: PreloaderProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -12,20 +19,10 @@ export default function Preloader(props) {
     return () => clearTimeout(timer);
   }, []);
 
-  // colors
-  const colors = {
-    primary: "text-indigo-500",
-    secondary: "text-pink-500",
-    success: "text-green-500",
-    warning: "text-yellow-500",
-    danger: "text-red-500",
-    info: "text-cyan-500",
-    light: "text-gray-500",
-    dark: "text-gray-900",
-  };
-
   // Props ( color )
-  const addcolor = props.color ? colors[props.color] : "text-indigo-500";
+  const addcolor = props.color
+    ? PRELOADER_COLORS[props.color]
+    : PRELOADER_COLORS[ENUM_COLOR.primary];
 
   return (
     <div className="relative">

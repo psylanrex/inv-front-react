@@ -1,14 +1,18 @@
 import { Tooltip } from "@/components/reactdash-ui";
+import { ENUM_SIZE, RATING_SIZES } from "@/utils/utils.enum";
 import { Star, StarFill, StarHalf } from "react-bootstrap-icons";
 
-export default function Rating(props) {
+type RatingProps = {
+  model?: "right" | "tooltip";
+  data: number;
+  size?: keyof typeof ENUM_SIZE;
+};
+
+export default function Rating(props: RatingProps) {
   const count = props.data;
-  const sizes = {
-    small: "w-4 h-4",
-    medium: "w-8 h-8",
-    large: "w-12 h-12",
-  };
-  const addSize = props.size ? sizes[props.size] : "w-4 h-4";
+  const addSize = props.size
+    ? RATING_SIZES[props.size]
+    : RATING_SIZES[ENUM_SIZE.small];
 
   return (
     <>
@@ -16,7 +20,7 @@ export default function Rating(props) {
         <div className="flex items-center">
           <ul className="flex mt-1 mb-2 relative">
             {count < 1 ? (
-              [...Array(5)].map((star, index) => {
+              [...Array(5)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-white">
@@ -29,7 +33,7 @@ export default function Rating(props) {
                 <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                   <StarFill className={`${addSize}`} />
                 </li>
-                {[...Array(4)].map((stars, index) => {
+                {[...Array(4)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -49,7 +53,7 @@ export default function Rating(props) {
                 <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                   <StarHalf className={`${addSize}`} />
                 </li>
-                {[...Array(3)].map((starb, index) => {
+                {[...Array(3)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -63,7 +67,7 @@ export default function Rating(props) {
               </>
             ) : count >= 2 && count < 2.5 ? (
               <>
-                {[...Array(2)].map((starc, index) => {
+                {[...Array(2)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -74,7 +78,7 @@ export default function Rating(props) {
                     </li>
                   );
                 })}
-                {[...Array(3)].map((stard, index) => {
+                {[...Array(3)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -88,7 +92,7 @@ export default function Rating(props) {
               </>
             ) : count >= 2.5 && count < 3 ? (
               <>
-                {[...Array(2)].map((stare, index) => {
+                {[...Array(2)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -102,7 +106,7 @@ export default function Rating(props) {
                 <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                   <StarHalf className={`${addSize}`} />
                 </li>
-                {[...Array(2)].map((starf, index) => {
+                {[...Array(2)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -116,7 +120,7 @@ export default function Rating(props) {
               </>
             ) : count >= 3 && count < 3.5 ? (
               <>
-                {[...Array(3)].map((starg, index) => {
+                {[...Array(3)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -127,7 +131,7 @@ export default function Rating(props) {
                     </li>
                   );
                 })}
-                {[...Array(2)].map((stari, index) => {
+                {[...Array(2)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -141,7 +145,7 @@ export default function Rating(props) {
               </>
             ) : count >= 3.5 && count < 4 ? (
               <>
-                {[...Array(3)].map((starj, index) => {
+                {[...Array(3)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -155,7 +159,7 @@ export default function Rating(props) {
                 <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                   <StarHalf className={`${addSize}`} />
                 </li>
-                {[...Array(1)].map((stark, index) => {
+                {[...Array(1)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -169,7 +173,7 @@ export default function Rating(props) {
               </>
             ) : count >= 4 && count < 4.5 ? (
               <>
-                {[...Array(4)].map((starl, index) => {
+                {[...Array(4)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -180,7 +184,7 @@ export default function Rating(props) {
                     </li>
                   );
                 })}
-                {[...Array(1)].map((starm, index) => {
+                {[...Array(1)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -194,7 +198,7 @@ export default function Rating(props) {
               </>
             ) : count >= 4.5 && count < 5 ? (
               <>
-                {[...Array(4)].map((starn, index) => {
+                {[...Array(4)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -211,7 +215,7 @@ export default function Rating(props) {
               </>
             ) : count === 5 ? (
               <>
-                {[...Array(5)].map((staro, index) => {
+                {[...Array(5)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -233,7 +237,7 @@ export default function Rating(props) {
         <Tooltip title={`${count} / 5`}>
           <ul className="flex mt-1 mb-2 relative">
             {count < 1 ? (
-              [...Array(5)].map((star, index) => {
+              [...Array(5)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-white">
@@ -246,7 +250,7 @@ export default function Rating(props) {
                 <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                   <StarFill className={`${addSize}`} />
                 </li>
-                {[...Array(4)].map((stars, index) => {
+                {[...Array(4)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -266,7 +270,7 @@ export default function Rating(props) {
                 <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                   <StarHalf className={`${addSize}`} />
                 </li>
-                {[...Array(3)].map((starb, index) => {
+                {[...Array(3)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -280,7 +284,7 @@ export default function Rating(props) {
               </>
             ) : count >= 2 && count < 2.5 ? (
               <>
-                {[...Array(2)].map((starc, index) => {
+                {[...Array(2)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -291,7 +295,7 @@ export default function Rating(props) {
                     </li>
                   );
                 })}
-                {[...Array(3)].map((stard, index) => {
+                {[...Array(3)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -305,7 +309,7 @@ export default function Rating(props) {
               </>
             ) : count >= 2.5 && count < 3 ? (
               <>
-                {[...Array(2)].map((stare, index) => {
+                {[...Array(2)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -319,7 +323,7 @@ export default function Rating(props) {
                 <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                   <StarHalf className={`${addSize}`} />
                 </li>
-                {[...Array(2)].map((starf, index) => {
+                {[...Array(2)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -333,7 +337,7 @@ export default function Rating(props) {
               </>
             ) : count >= 3 && count < 3.5 ? (
               <>
-                {[...Array(3)].map((starg, index) => {
+                {[...Array(3)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -344,7 +348,7 @@ export default function Rating(props) {
                     </li>
                   );
                 })}
-                {[...Array(2)].map((stari, index) => {
+                {[...Array(2)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -358,7 +362,7 @@ export default function Rating(props) {
               </>
             ) : count >= 3.5 && count < 4 ? (
               <>
-                {[...Array(3)].map((starj, index) => {
+                {[...Array(3)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -372,7 +376,7 @@ export default function Rating(props) {
                 <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                   <StarHalf className={`${addSize}`} />
                 </li>
-                {[...Array(1)].map((stark, index) => {
+                {[...Array(1)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -386,7 +390,7 @@ export default function Rating(props) {
               </>
             ) : count >= 4 && count < 4.5 ? (
               <>
-                {[...Array(4)].map((starl, index) => {
+                {[...Array(4)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -397,7 +401,7 @@ export default function Rating(props) {
                     </li>
                   );
                 })}
-                {[...Array(1)].map((starm, index) => {
+                {[...Array(1)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -411,7 +415,7 @@ export default function Rating(props) {
               </>
             ) : count >= 4.5 && count < 5 ? (
               <>
-                {[...Array(4)].map((starn, index) => {
+                {[...Array(4)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -428,7 +432,7 @@ export default function Rating(props) {
               </>
             ) : count === 5 ? (
               <>
-                {[...Array(5)].map((staro, index) => {
+                {[...Array(5)].map((_, index) => {
                   index += 1;
                   return (
                     <li
@@ -448,7 +452,7 @@ export default function Rating(props) {
       ) : (
         <ul className="flex relative">
           {count < 1 ? (
-            [...Array(5)].map((star, index) => {
+            [...Array(5)].map((_, index) => {
               index += 1;
               return (
                 <li key={index} className="ltr:mr-2 rtl:ml-2 text-white">
@@ -461,7 +465,7 @@ export default function Rating(props) {
               <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                 <StarFill className={`${addSize}`} />
               </li>
-              {[...Array(4)].map((stars, index) => {
+              {[...Array(4)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -478,7 +482,7 @@ export default function Rating(props) {
               <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                 <StarHalf className={`${addSize}`} />
               </li>
-              {[...Array(3)].map((starb, index) => {
+              {[...Array(3)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -489,7 +493,7 @@ export default function Rating(props) {
             </>
           ) : count >= 2 && count < 2.5 ? (
             <>
-              {[...Array(2)].map((starc, index) => {
+              {[...Array(2)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -497,7 +501,7 @@ export default function Rating(props) {
                   </li>
                 );
               })}
-              {[...Array(3)].map((stard, index) => {
+              {[...Array(3)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -508,7 +512,7 @@ export default function Rating(props) {
             </>
           ) : count >= 2.5 && count < 3 ? (
             <>
-              {[...Array(2)].map((stare, index) => {
+              {[...Array(2)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -519,7 +523,7 @@ export default function Rating(props) {
               <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                 <StarHalf className={`${addSize}`} />
               </li>
-              {[...Array(2)].map((starf, index) => {
+              {[...Array(2)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -530,7 +534,7 @@ export default function Rating(props) {
             </>
           ) : count >= 3 && count < 3.5 ? (
             <>
-              {[...Array(3)].map((starg, index) => {
+              {[...Array(3)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -538,7 +542,7 @@ export default function Rating(props) {
                   </li>
                 );
               })}
-              {[...Array(2)].map((stari, index) => {
+              {[...Array(2)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -549,7 +553,7 @@ export default function Rating(props) {
             </>
           ) : count >= 3.5 && count < 4 ? (
             <>
-              {[...Array(3)].map((starj, index) => {
+              {[...Array(3)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -560,7 +564,7 @@ export default function Rating(props) {
               <li className="ltr:mr-2 rtl:ml-2 text-yellow-400">
                 <StarHalf className={`${addSize}`} />
               </li>
-              {[...Array(1)].map((stark, index) => {
+              {[...Array(1)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -571,7 +575,7 @@ export default function Rating(props) {
             </>
           ) : count >= 4 && count < 4.5 ? (
             <>
-              {[...Array(4)].map((starl, index) => {
+              {[...Array(4)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -579,7 +583,7 @@ export default function Rating(props) {
                   </li>
                 );
               })}
-              {[...Array(1)].map((starm, index) => {
+              {[...Array(1)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -590,7 +594,7 @@ export default function Rating(props) {
             </>
           ) : count >= 4.5 && count < 5 ? (
             <>
-              {[...Array(4)].map((starn, index) => {
+              {[...Array(4)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">
@@ -604,7 +608,7 @@ export default function Rating(props) {
             </>
           ) : count === 5 ? (
             <>
-              {[...Array(5)].map((staro, index) => {
+              {[...Array(5)].map((_, index) => {
                 index += 1;
                 return (
                   <li key={index} className="ltr:mr-2 rtl:ml-2 text-yellow-400">

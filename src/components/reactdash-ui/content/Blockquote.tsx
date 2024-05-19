@@ -1,4 +1,10 @@
-export default function Blockquote(props) {
+type BlockquoteProps = {
+  title: string;
+  author: string;
+  by?: string;
+};
+
+export default function Blockquote(props: BlockquoteProps) {
   const title = props.title;
   const author = props.author;
   const by = props.by ? props.by : "Quote by";

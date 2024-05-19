@@ -1,13 +1,17 @@
 import { ArrowUpShort, ArrowDownShort } from "react-bootstrap-icons";
 
+type ProgressUpDownProps = {
+  data: { new: number; old: number };
+};
+
 // Chart percent
-export default function ProgressUpDown(props) {
+export default function ProgressUpDown(props: ProgressUpDownProps) {
   // props
   const data = props.data;
   const new_data = data.new;
   const old_data = data.old;
   const totalDecimal = ((new_data - old_data) / new_data) * 100;
-  const totalPercent = totalDecimal.toFixed(1);
+  const totalPercent = +totalDecimal.toFixed(1);
 
   return (
     <>

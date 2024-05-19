@@ -1,3 +1,4 @@
+import { BREADCRUMB_COLORS, ENUM_BREADCRUMB_COLOR } from "@/utils/utils.enum";
 import { Link } from "react-router-dom";
 
 type BreadcrumbData = {
@@ -7,21 +8,18 @@ type BreadcrumbData = {
 
 type BreadcrumbProps = {
   data: BreadcrumbData[];
+  color?: keyof typeof ENUM_BREADCRUMB_COLOR;
+  className?: string;
 };
 
 export default function Breadcrumb(props: BreadcrumbProps) {
   // data breadcrumb
   const breadcrumbLists = props.data;
 
-  // colors
-  const colors = {
-    light: "text-gray-300 hover:text-white",
-    dark: "text-gray-500 hover:text-indigo-500",
-  };
   // props ( color, className )
   const addcolor = props.color
-    ? colors[props.color]
-    : "text-gray-500 hover:text-indigo-500";
+    ? BREADCRUMB_COLORS[props.color]
+    : BREADCRUMB_COLORS[ENUM_BREADCRUMB_COLOR.dark];
   const addClass = props.className ? `${props.className}` : "";
 
   return (

@@ -1,4 +1,10 @@
-export default function Heading(props) {
+type HeadingProps = {
+  className?: string;
+  variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  children: React.ReactNode;
+};
+
+export default function Heading(props: HeadingProps) {
   const addClass = props.className ? ` ${props.className}` : "";
 
   return (

@@ -1,8 +1,16 @@
 import { ChevronDown } from "react-bootstrap-icons";
 import { Button } from "@/components/reactdash-ui";
 import { Disclosure, Transition } from "@headlessui/react";
+import { ENUM_BUTTON_COLOR } from "@/utils/utils.enum";
 
-export default function Collapse(props) {
+type CollapseProps = {
+  className?: string;
+  children?: React.ReactNode;
+  title: string;
+  color?: keyof typeof ENUM_BUTTON_COLOR;
+};
+
+export default function Collapse(props: CollapseProps) {
   // Props ( title, color, className )
   const color = props.color;
   const addClass = props.className ? ` ${props.className}` : "";

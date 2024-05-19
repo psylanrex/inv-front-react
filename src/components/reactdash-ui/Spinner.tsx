@@ -1,39 +1,34 @@
-export default function Spinner(props) {
+import {
+  ENUM_COLOR,
+  ENUM_SIZE,
+  SPINNER_COLORS,
+  SPINNER_COLORS_BG,
+  SPINNER_SIZES,
+} from "@/utils/utils.enum";
+
+type SpinnerProps = {
+  className?: string;
+  model?: "ping";
+  color?: keyof typeof ENUM_COLOR;
+  size?: keyof typeof ENUM_SIZE;
+};
+
+export default function Spinner(props: SpinnerProps) {
   // model
   const model = props.model;
+
   // colors
-  const colors = {
-    primary: "text-indigo-500",
-    secondary: "text-pink-500",
-    success: "text-green-500",
-    warning: "text-yellow-500",
-    danger: "text-red-500",
-    info: "text-cyan-500",
-    light: "text-gray-500",
-    dark: "text-gray-900",
-  };
-  const addcolor = props.color ? colors[props.color] : "text-indigo-500";
-  // bg color
-  const colors_bg = {
-    primary: "bg-indigo-500",
-    secondary: "bg-pink-500",
-    success: "bg-green-500",
-    warning: "bg-yellow-500",
-    danger: "bg-red-500",
-    info: "bg-cyan-500",
-    light: "bg-gray-500",
-    dark: "bg-gray-900",
-  };
-  // size
-  const sizes = {
-    "x-small": "h-3 w-3",
-    small: "h-5 w-5",
-    medium: "h-8 w-8",
-    large: "h-20 w-20",
-  };
+  const addcolor = props.color
+    ? SPINNER_COLORS[props.color]
+    : SPINNER_COLORS[ENUM_COLOR.primary];
+
   // Props ( color, size, className, model )
-  const addcolorbg = props.color ? colors_bg[props.color] : "bg-indigo-500";
-  const addSize = props.size ? sizes[props.size] : "h-8 w-8";
+  const addcolorbg = props.color
+    ? SPINNER_COLORS_BG[props.color]
+    : SPINNER_COLORS_BG[ENUM_COLOR.primary];
+  const addSize = props.size
+    ? SPINNER_SIZES[props.size]
+    : SPINNER_SIZES[ENUM_SIZE.medium];
   const addClass = props.className ? ` ${props.className}` : "";
 
   return (

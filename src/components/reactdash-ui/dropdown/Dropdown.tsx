@@ -2,7 +2,17 @@ import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDown } from "react-bootstrap-icons";
 
-export default function Dropdown(props) {
+type DropdownData = {
+  title: string;
+  url: string;
+};
+
+type DropdownProps = {
+  title: string;
+  data: DropdownData[];
+};
+
+export default function Dropdown(props: DropdownProps) {
   // Data list ( props.data )
   const dropdown_items = props.data;
 

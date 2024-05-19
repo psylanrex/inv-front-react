@@ -1,4 +1,11 @@
-export default function Tooltip(props) {
+type TooltipProps = {
+  className?: string;
+  placement?: "top" | "bottom";
+  title: string;
+  children?: React.ReactNode;
+};
+
+export default function Tooltip(props: TooltipProps) {
   // Props ( placement )
   const placement = props.placement ? props.placement : "top";
   const addClass = props.className ? `${props.className}` : "";

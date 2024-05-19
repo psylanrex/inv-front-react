@@ -1,4 +1,10 @@
-export default function Devices(props) {
+type DevicesProps = {
+  variant?: "macbook";
+  className?: string;
+  img: string;
+};
+
+export default function Devices(props: DevicesProps) {
   //  props ( variant, className ,img )
   const device = props.variant;
   const addClass = props.className ? `${props.className}` : "";

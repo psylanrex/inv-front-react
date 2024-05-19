@@ -1,7 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDown } from "react-bootstrap-icons";
 
-export default function DropdownCustom(props) {
+type DropdownCustomProps = {
+  title: string;
+  children: React.ReactNode;
+};
+
+export default function DropdownCustom(props: DropdownCustomProps) {
   return (
     <Menu>
       <Menu.Button className="flex items-center py-3 px-6">

@@ -87,7 +87,7 @@ export default function MonthlyRevenue(props) {
           <Currency data={isData.revenue} />
         </h4>
         <div className="w-full h-4 rounded-full mt-2">
-          <Progress percent={percent.toFixed(0)} color={percent_color} />
+          <Progress percent={percent} color={percent_color} />
         </div>
         <p className="text-sm text-gray-500 mt-3">
           {from_text} <Currency data={isData.target} />

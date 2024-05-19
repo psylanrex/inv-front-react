@@ -207,7 +207,7 @@ export default function RegisterExp() {
 
                 <div className="mb-6">
                   <label className="flex flex-row items-center">
-                    <Checkbox name="tos" value="1" required="true" checked />
+                    <Checkbox name="tos" value="1" required checked />
                     <p className="ml-2">
                       I agree to the <a href="#">Terms and Conditions</a>
                     </p>

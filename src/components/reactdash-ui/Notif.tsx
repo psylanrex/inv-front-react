@@ -1,4 +1,10 @@
-export default function Notif(props) {
+type NotifProps = {
+  className?: string;
+  count: number;
+  icon: React.ReactNode;
+};
+
+export default function Notif(props: NotifProps) {
   // Props ( icon, count , className )
   const notifIcon = props.icon;
   const notifcount = props.count;

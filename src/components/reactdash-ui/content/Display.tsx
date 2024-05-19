@@ -1,11 +1,13 @@
-export default function Display(props) {
-  const sizes = {
-    "1": "text-8xl",
-    "2": "text-7xl",
-    "3": "text-6xl",
-    "4": "text-5xl",
-  };
-  const addSize = props.size ? sizes[props.size] : "text-5xl";
+import { DISPLAY_SIZES } from "@/utils/utils.enum";
+
+type DisplayProps = {
+  variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  children?: React.ReactNode;
+  size?: "1" | "2" | "3" | "4";
+};
+
+export default function Display(props: DisplayProps) {
+  const addSize = props.size ? DISPLAY_SIZES[props.size] : "text-5xl";
 
   return (
     <>

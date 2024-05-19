@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 
-export default function DropdownUser(props) {
+type DropdownUserData = {
+  title: string;
+  url: string;
+  icon: React.ReactNode;
+};
+
+type DropdownUserProps = {
+  user: { name: string; img: string; info: string; url?: string };
+  data: DropdownUserData[];
+};
+
+export default function DropdownUser(props: DropdownUserProps) {
   // data admin
   const userAdmin = props.user;
   // list dropdown
@@ -52,7 +63,7 @@ export default function DropdownUser(props) {
               <div className="flex-shrink max-w-full px-4 w-2/3 ltr:pl-1 rtl:pr-1">
                 <div className="font-bold">
                   <Link
-                    to={userAdmin.url}
+                    to={userAdmin.url ?? "#"}
                     className="text-gray-800 dark:text-gray-300 hover:text-indigo-500"
                   >
                     {userAdmin.name}

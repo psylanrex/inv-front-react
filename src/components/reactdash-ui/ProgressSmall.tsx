@@ -1,4 +1,8 @@
-export default function ProgressSmall(props) {
+type ProgressSmallProps = {
+  data: number;
+};
+
+export default function ProgressSmall(props: ProgressSmallProps) {
   // bg progress
   const data_percent = props.data;
   const percent = data_percent.toFixed(0) + "%";

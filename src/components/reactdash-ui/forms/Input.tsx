@@ -1,17 +1,31 @@
-export default function Input(props) {
-  const shapes = {
-    rounded: "rounded",
-    square: "rounded-none",
-    pill: "rounded-3xl",
-    circle: "rounded-full !p-2.5",
-  };
-  const sizes = {
-    small: "py-1 px-2.5 text-sm",
-    medium: "py-2 px-4",
-    large: "py-3 px-6",
-  };
-  const addSize = props.size ? sizes[props.size] : "py-2 px-4";
-  const addShape = props.shape ? shapes[props.shape] : "rounded";
+import {
+  ENUM_INPUT_SIZE,
+  ENUM_SHAPE,
+  INPUT_SHAPES,
+  INPUT_SIZES,
+} from "@/utils/utils.enum";
+
+type InputProps = {
+  model?: "float";
+  className?: string;
+  name?: string;
+  value?: string | number | readonly string[];
+  disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  placeholder?: string;
+  id?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  shape?: keyof typeof ENUM_SHAPE;
+  type?: React.HTMLInputTypeAttribute;
+  size?: keyof typeof ENUM_INPUT_SIZE;
+};
+
+export default function Input(props: InputProps) {
+  const addSize = props.size ? INPUT_SIZES[props.size] : "py-2 px-4";
+  const addShape = props.shape
+    ? INPUT_SHAPES[props.shape]
+    : INPUT_SHAPES[ENUM_SHAPE.rounded];
   const addClass = props.className ? `${props.className} ` : "";
   const addType = props.type ? `${props.type}` : "text";
   const disabled_css = props.disabled

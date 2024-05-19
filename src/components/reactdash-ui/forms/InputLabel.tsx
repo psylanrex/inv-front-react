@@ -1,17 +1,31 @@
-export default function InputLabel(props) {
-  const shapes = {
-    rounded: "rounded",
-    square: "rounded-none",
-    pill: "rounded-3xl",
-    circle: "rounded-full !p-2.5",
-  };
-  const sizes = {
-    small: "py-1 px-2.5 text-sm",
-    medium: "py-2 px-4",
-    large: "py-3 px-6",
-  };
-  const addSize = props.size ? sizes[props.size] : "py-2 px-4";
-  const addShape = props.shape ? shapes[props.shape] : "rounded";
+import {
+  ENUM_INPUT_LABEL_SIZE,
+  ENUM_SHAPE,
+  INPUT_LABEL_SHAPES,
+  INPUT_LABEL_SIZES,
+} from "@/utils/utils.enum";
+
+type InputLabelProps = {
+  className?: string;
+  type?: React.HTMLInputTypeAttribute;
+  disabled?: boolean;
+  label?: string;
+  id?: string;
+  name?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  readOnly?: boolean;
+  required?: boolean;
+  value?: string | number | readonly string[];
+  placeholder?: string;
+  shape?: keyof typeof ENUM_SHAPE;
+  size?: keyof typeof ENUM_INPUT_LABEL_SIZE;
+};
+
+export default function InputLabel(props: InputLabelProps) {
+  const addSize = props.size ? INPUT_LABEL_SIZES[props.size] : "py-2 px-4";
+  const addShape = props.shape
+    ? INPUT_LABEL_SHAPES[props.shape]
+    : INPUT_LABEL_SHAPES[ENUM_SHAPE.rounded];
   const addClass = props.className ? `${props.className} ` : "";
   const addType = props.type ? `${props.type}` : "text";
   const disabled_css = props.disabled

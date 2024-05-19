@@ -1,5 +1,10 @@
+type RowProps = {
+  className?: string;
+  children?: React.ReactNode;
+};
+
 // flex row
-export default function Row(props) {
+export default function Row(props: RowProps) {
   // Props ( className )
   const addClass = props.className ? `${props.className}` : "";
 

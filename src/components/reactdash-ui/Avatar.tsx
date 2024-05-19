@@ -1,4 +1,9 @@
-import { ENUM_SHAPE, ENUM_SIZE, SHAPES, SIZES } from "@/utils/utils.enum";
+import {
+  ENUM_SHAPE,
+  ENUM_SIZE,
+  AVATAR_SHAPES,
+  AVATAR_SIZES,
+} from "@/utils/utils.enum";
 
 type AvatarProps = {
   data: { img: string; name: string };
@@ -13,9 +18,11 @@ export default function Avatar(props: AvatarProps) {
 
   // props ( shape, size, className )
   const addshape = props.shape
-    ? SHAPES[props.shape]
-    : SHAPES[ENUM_SHAPE.circle];
-  const addSize = props.size ? SIZES[props.size] : SIZES[ENUM_SIZE.medium];
+    ? AVATAR_SHAPES[props.shape]
+    : AVATAR_SHAPES[ENUM_SHAPE.circle];
+  const addSize = props.size
+    ? AVATAR_SIZES[props.size]
+    : AVATAR_SIZES[ENUM_SIZE.medium];
   const addClass = props.className ? ` ${props.className}` : "";
 
   return (

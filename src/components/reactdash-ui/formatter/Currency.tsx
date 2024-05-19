@@ -1,4 +1,8 @@
-export default function Currency(props) {
+type CurrencyProps = {
+  data: number;
+};
+
+export default function Currency(props: CurrencyProps) {
   const number = props.data;
 
   return (

@@ -1,7 +1,17 @@
 import { ChevronDown } from "react-bootstrap-icons";
 import { Disclosure, Transition } from "@headlessui/react";
 
-export default function FaqCollapse(props) {
+type FaqCollapseData = {
+  question: string;
+  answer: string;
+};
+
+type FaqCollapseProps = {
+  className?: string;
+  data: FaqCollapseData[];
+};
+
+export default function FaqCollapse(props: FaqCollapseProps) {
   // Props ( data, className )
   const faqitem = props.data;
   const addClass = props.className ? ` ${props.className}` : "";

@@ -1,10 +1,14 @@
-export default function Figure(props) {
-  const aligns = {
-    left: "lg:ltr:float-left lg:rtl:float-right ltr:ml-0 rtl:mr-0 lg:pr-6",
-    center: "w-full",
-    right: "lg:ltr:float-right lg:rtl:float-left ltr:ml-0 rtl:mr-0 lg:pl-6",
-  };
-  const addAlign = props.align ? aligns[props.align] : "w-full";
+import { ENUM_FIGURE_ALIGN, FIGURE_ALIGNS } from "@/utils/utils.enum";
+
+type FigureProps = {
+  description: string;
+  img: string;
+  alt?: string;
+  align?: keyof typeof ENUM_FIGURE_ALIGN;
+};
+
+export default function Figure(props: FigureProps) {
+  const addAlign = props.align ? FIGURE_ALIGNS[props.align] : "w-full";
 
   return (
     <figure className={`${addAlign} text-center mb-5`}>

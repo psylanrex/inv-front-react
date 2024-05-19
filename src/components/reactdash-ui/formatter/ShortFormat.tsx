@@ -1,4 +1,8 @@
-export default function ShortFormat(props) {
+type ShortFormatProps = {
+  data: number;
+};
+
+export default function ShortFormat(props: ShortFormatProps) {
   const number = props.data;
 
   return (

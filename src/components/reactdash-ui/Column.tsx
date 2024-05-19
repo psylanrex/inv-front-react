@@ -1,5 +1,10 @@
+type ColumnProps = {
+  className?: string;
+  children?: React.ReactNode;
+};
+
 // column
-export default function Column(props) {
+export default function Column(props: ColumnProps) {
   // props ( className )
   const addClass = props.className ? `${props.className}` : "";
 

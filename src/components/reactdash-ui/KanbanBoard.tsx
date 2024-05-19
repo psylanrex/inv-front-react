@@ -7,6 +7,9 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
+  DragStartEvent,
+  DragOverEvent,
+  DragEndEvent,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import KanbanColumn, { Item } from "./KanbanColumn";
@@ -278,7 +281,7 @@ const KanbanBoard = () => {
     ],
     failed: [],
   });
-  const [activeId, setActiveId] = useState();
+  const [activeId, setActiveId] = useState(null);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -328,7 +331,7 @@ const KanbanBoard = () => {
     return null;
   }
 
-  function handleDragStart(event) {
+  function handleDragStart(event: DragStartEvent) {
     const { active } = event;
     const { id } = active;
     const activeContainer = findContainer(id);
@@ -341,7 +344,7 @@ const KanbanBoard = () => {
     }
   }
 
-  function handleDragOver(event) {
+  function handleDragOver(event: DragOverEvent) {
     const { active, over, draggingRect } = event;
     const { id } = active;
     const overId = over ? over.id : null;
@@ -358,7 +361,7 @@ const KanbanBoard = () => {
       return;
     }
 
-    setItems((prev) => {
+    setItems((prev: any) => {
       const activeItems = prev[activeContainer];
       const overItems = prev[overContainer];
 
@@ -398,7 +401,7 @@ const KanbanBoard = () => {
     });
   }
 
-  function handleDragEnd(event) {
+  function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     const { id } = active;
     const overId = over ? over.id : null;
