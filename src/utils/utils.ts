@@ -7,10 +7,11 @@ export const getAccessToken = () => {
 };
 
 export const saveAccessToken = (accessToken: string) => {
+  if (!accessToken) return;
   localStorage.setItem("accessToken", accessToken);
 };
 
-export const removeToken = () => {
+export const removeAccessToken = () => {
   localStorage.removeItem("accessToken");
 };
 

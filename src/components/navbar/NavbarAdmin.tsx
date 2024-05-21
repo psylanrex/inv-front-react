@@ -20,8 +20,20 @@ import {
   DropdownMessage,
   Switch,
 } from "@/components/reactdash-ui";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "@/app/store";
+import { removeAccessToken } from "@/utils/utils";
+import { resetProfile } from "@/slices/profileSlice";
 
-export default function NavbarAdmin(props) {
+type NavbarAdminProps = {
+  model?: "compact" | "default";
+  dataToggle?: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+export default function NavbarAdmin(props: NavbarAdminProps) {
+  const profile = useSelector((state: RootState) => state.profile);
+  const dispatch = useAppDispatch();
+
   // set toggle dark
   const [isDark, setDark] = useState(false);
   // dark mode on
@@ -144,20 +156,6 @@ export default function NavbarAdmin(props) {
     footer_text: "See all Notification",
     footer_url: "/",
   };
-
-  // Data admin ( DropdownUser )
-  const data_user = {
-    name: "Ari budin",
-    img: "/img/avatar/avatar.png",
-    info: "Professional Front end developer",
-  };
-  // list dropdown user
-  const data_dropdown_user = [
-    { title: "Setting Privacy", url: "/", icon: <Gear /> },
-    { title: "Help Support", url: "/", icon: <QuestionCircle /> },
-    { title: "Change Language", url: "/", icon: <Translate /> },
-    { title: "Sign Out", url: "/", icon: <BoxArrowRight /> },
-  ];
   const models = {
     compact: "navtop-compact",
     default: "navtop-area",
@@ -202,7 +200,27 @@ export default function NavbarAdmin(props) {
           <DropdownNotif data={data_dropdown_notif} data_text={text_notif} />
         </li>
         <li className="relative">
-          <DropdownUser data={data_dropdown_user} user={data_user} />
+          <DropdownUser
+            data={[
+              { title: "Setting Privacy", url: "#", icon: <Gear /> },
+              { title: "Help Support", url: "#", icon: <QuestionCircle /> },
+              { title: "Change Language", url: "#", icon: <Translate /> },
+              {
+                title: "Sign Out",
+                url: "#",
+                icon: <BoxArrowRight />,
+                onClick: () => {
+                  removeAccessToken();
+                  dispatch(resetProfile());
+                },
+              },
+            ]}
+            user={{
+              name: profile.name!,
+              img: "/img/avatar/avatar.png",
+              info: profile.balance!,
+            }}
+          />
         </li>
       </ul>
     </nav>

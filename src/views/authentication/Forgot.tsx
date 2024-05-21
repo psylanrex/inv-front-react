@@ -10,15 +10,13 @@ import {
 export default function Forgot() {
   const forgots = {
     login: "Login",
-    link_login: "/auth2/login",
-    forgot_link: "/auth2/forgot",
+    link_login: "/auth/login",
+    forgot_link: "/auth/forgot",
     register: "Register",
-    register_link: "/auth2/register",
+    register_link: "/auth/register",
     remember: "Remember me",
     or: "Or",
     dont: "Dont have an account?",
-    login_fb: "Login with FB",
-    login_twitter: "Login with Twitter",
   };
 
   return (

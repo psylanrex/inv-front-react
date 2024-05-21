@@ -54,18 +54,20 @@ export default function AuthIlustrationLayout(
                     alt={cover.alt}
                     className="max-w-full h-auto mx-auto"
                   />
-                  <div className="px-4 mt-4">
-                    <h2 className="text-2xl mb-2">{cover.title}</h2>
-                    <ul>
-                      {cover.details.map((detail, index) => (
-                        <li key={index}>
-                          <h3 className="flex gap-2 items-center ml-4">
-                            <Check2Square color="#52c41a" /> {detail.title}
-                          </h3>
-                        </li>
-                      ))}
-                    </ul>
-                    <h1 className="text-2xl">{cover.description}</h1>
+                  <div className="flex justify-center">
+                    <div className="px-4 mt-4 w-[420px]">
+                      <h2 className="text-2xl mb-2">{cover.title}</h2>
+                      <ul>
+                        {cover.details.map((detail, index) => (
+                          <li key={index}>
+                            <h3 className="flex gap-2 items-center ml-4">
+                              <Check2Square color="#52c41a" /> {detail.title}
+                            </h3>
+                          </li>
+                        ))}
+                      </ul>
+                      <h1 className="text-2xl">{cover.description}</h1>
+                    </div>
                   </div>
                 </div>
               </Column>

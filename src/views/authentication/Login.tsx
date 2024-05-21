@@ -12,6 +12,9 @@ import { authImpersonate } from "@/api/auth";
 import to from "await-to-js";
 import { toast } from "react-toastify";
 import { saveAccessToken } from "@/utils/utils";
+import { useAppDispatch } from "@/app/store";
+import { updateProfile } from "@/slices/profileSlice";
+import { accountProfile } from "@/api/account";
 
 type FormData = {
   user_name: string;
@@ -19,6 +22,7 @@ type FormData = {
 };
 
 export default function Login() {
+  const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const { register, handleSubmit } = useForm<FormData>();
 
@@ -32,12 +36,17 @@ export default function Login() {
   };
 
   const onSubmit = async (data: FormData) => {
-    const [err, res]: any = await to(
+    const [err, res] = await to(
       authImpersonate({ ...data, vendor_id: searchParams.get("vendor_id")! })
     );
-    if (err) return toast.error(err?.response?.data?.message);
+    if (err) return toast.error((err as any)?.response?.data?.message);
+    saveAccessToken(res.token);
 
-    if (res.token) saveAccessToken(res.token);
+    const [error, account] = await to(accountProfile());
+    if (error) return toast.error((error as any)?.response?.data?.message);
+
+    dispatch(updateProfile(account!));
+    toast.success("Login successful");
   };
 
   return (

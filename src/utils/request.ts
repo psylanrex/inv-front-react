@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken } from "./utils";
+import { getAccessToken, removeAccessToken } from "./utils";
 
 const defaultOptions = {
   baseURL: import.meta.env.VITE_INVITORY_API,
@@ -7,13 +7,26 @@ const defaultOptions = {
 
 // create instance
 const instance = axios.create(defaultOptions);
+instance.interceptors.response.use(
+  async (config) => {
+    return config;
+  },
+  (error) => {
+    if (error.response?.status === 401) removeAccessToken();
 
-instance.interceptors.request.use(async (config) => {
-  let { token } = getAccessToken();
+    return Promise.reject(error);
+  }
+);
 
-  config.headers.Authorization = token ? `Bearer ${token}` : "";
-
-  return config;
-});
+instance.interceptors.request.use(
+  async (config) => {
+    const { token } = getAccessToken();
+    config.headers.Authorization = token ? `Bearer ${token}` : "";
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default instance;

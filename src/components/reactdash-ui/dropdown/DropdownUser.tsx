@@ -5,6 +5,7 @@ type DropdownUserData = {
   title: string;
   url: string;
   icon: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 type DropdownUserProps = {
@@ -77,16 +78,17 @@ export default function DropdownUser(props: DropdownUserProps) {
             <hr className="border-t border-gray-200 dark:border-gray-700 my-0" />
           </li>
 
-          {menuAdmin.map((menuitem, index) => (
+          {menuAdmin.map((menuItem, index) => (
             <li key={index}>
               <Link
-                to={menuitem.url}
+                to={menuItem.url}
+                onClick={menuItem.onClick}
                 className="flex items-center w-full py-2 px-6 clear-both whitespace-nowrap hover:text-indigo-500"
               >
                 <span className="ltr:mr-2 rtl:ml-2 w-4 h-4 bi bi-gear">
-                  {menuitem.icon}
+                  {menuItem.icon}
                 </span>
-                {menuitem.title}
+                {menuItem.title}
               </Link>
             </li>
           ))}
