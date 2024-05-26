@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "@/slices/*": ["./slices/*"],
+      "@/app/*": ["./app/*"],
+      "@/api/*": ["./api/*"],
+      "@/utils/*": ["./utils/*"],
+      "@/assets/*": ["./routes/*"],
+      "@/components/*": ["./components/*"],
+      "@/documentation/*": ["./routes/*"],
+      "@/layouts/*": ["./pages/*"],
+      "@/views/app/*": ["./views/app/*"],
+      "@/views/authentication/*": ["./views/authentication/*"],
+      "@/views/dashboard/*": ["./views/dashboard/*"],
+      "@/views/ecommerce/*": ["./views/ecommerce/*"],
+      "@/views/layouts/*": ["./views/layouts/*"],
+      "@/views/pages/*": ["./views/pages/*"],
+      "@/views/project/*": ["./views/project/*"],
+      "@/views/*": ["./views/*"],
+      "@/*": ["./*"]
+    },
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
