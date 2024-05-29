@@ -39,6 +39,7 @@ const InputLabel = React.forwardRef(
       <div className="mb-4">
         <label htmlFor={props.id} className="inline-block mb-2">
           {props.label}
+          {props.required && <span className="text-red-500"> *</span>}
         </label>
         <input
           ref={ref}
