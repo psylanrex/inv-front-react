@@ -48,7 +48,7 @@ export default function App() {
     { path: "/earnings/*", element: <Earnings /> },
     { path: "/support", element: <Support /> },
     { path: "/faq", element: <Faq /> },
-    { path: "/auth/login", element: <Navigate to="/" /> },
+    { path: "/auth/login", element: <Navigate to="/dashboard" /> },
   ];
   const loginRoutes = [
     { path: "/*", index: true, element: <Navigate to="/auth/login" /> },

@@ -37,7 +37,7 @@ import {
 } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
-export default function ComponentSection(props) {
+export default function ComponentSection() {
   const faq_title = {
     title: "Prebuilt Component",
     description:
