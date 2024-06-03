@@ -9,7 +9,7 @@ type DropdownUserData = {
 };
 
 type DropdownUserProps = {
-  user: { name: string; img: string; info: string; url?: string };
+  user: { name?: string; img: string; info?: string; url?: string };
   data: DropdownUserData[];
 };
 

@@ -58,8 +58,7 @@ export default function Login() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputLabel
           label="Username"
-          required
-          placeholder="Enter username"
+          placeholder="Username"
           {...register("user_name")}
         />
         <div className="mb-4">
@@ -71,11 +70,7 @@ export default function Login() {
               Forgot password?
             </Link>
           </div>
-          <InputPassword
-            required
-            placeholder="Enter password"
-            {...register("password")}
-          />
+          <InputPassword placeholder="Password" {...register("password")} />
         </div>
         <Checkbox name="remember" label="Remember me" value="1" checked />
 

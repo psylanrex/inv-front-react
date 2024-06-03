@@ -58,6 +58,7 @@ const InputPassword = React.forwardRef(
         {props.label ? (
           <label htmlFor={props.id} className="inline-block mb-2">
             {props.label}
+            {props.required && <span className="text-red-500"> *</span>}
           </label>
         ) : null}
         <div className="relative z-0">

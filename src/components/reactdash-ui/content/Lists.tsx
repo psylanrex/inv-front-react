@@ -1,6 +1,6 @@
 type ListsProps = {
   children: React.ReactNode;
-  variant?: "ol";
+  variant?: "ol" | "ul";
 };
 
 export default function Lists(props: ListsProps) {
