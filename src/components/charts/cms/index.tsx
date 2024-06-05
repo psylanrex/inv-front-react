@@ -6,7 +6,6 @@ import TotalLike from "@/components/charts/cms/TotalLike";
 import VisitorChart from "@/components/charts/cms/VisitorChart";
 import StatusChart from "@/components/charts/cms/StatusChart";
 import SeoChart from "@/components/charts/cms/SeoChart";
-import PurchaseStatsItem from "@/components/charts/cms/PurchaseStatsItem";
 
 export {
   TotalView,
@@ -16,5 +15,4 @@ export {
   VisitorChart,
   StatusChart,
   SeoChart,
-  PurchaseStatsItem,
 };

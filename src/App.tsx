@@ -7,7 +7,7 @@ import Landing from "@/views/Landing";
 import Maintenance from "@/views/Maintenance";
 import AdminCompact from "@/views/AdminCompact";
 import Sidedark from "@/views/Sidedark";
-import Dashboard from "@/pages/dashboard/Dashboard";
+import Dashboards from "./routes/Dashboards";
 import PurchaseOrders from "./routes/PurchaseOrders";
 import Invoices from "./routes/Invoices";
 import ManageItems from "./routes/ManageItems";
@@ -41,18 +41,18 @@ export default function App() {
     { path: "/side-dark/*", element: <Sidedark /> },
     { path: "/landing-page/*", element: <Landing /> },
     { path: "/maintenance/*", element: <Maintenance /> },
-    { path: "/dashboard", element: <Dashboard /> },
+    { path: "/dashboard/*", element: <Dashboards /> },
     { path: "/purchase-orders/*", element: <PurchaseOrders /> },
     { path: "/invoices/*", element: <Invoices /> },
     { path: "/manage-items/*", element: <ManageItems /> },
     { path: "/earnings/*", element: <Earnings /> },
     { path: "/support", element: <Support /> },
     { path: "/faq", element: <Faq /> },
-    { path: "/auth/login", element: <Navigate to="/dashboard" /> },
+    { path: "/impersonate/:vendor_id", element: <Navigate to="/dashboard" /> },
   ];
   const loginRoutes = [
-    { path: "/*", index: true, element: <Navigate to="/auth/login" /> },
-    { path: "/auth/*", element: <AuthIlustration /> },
+    { path: "/*", index: true, element: <Navigate to="/impersonate" /> },
+    { path: "/impersonate/*", element: <AuthIlustration /> },
   ];
 
   useAsyncEffect(async () => {
@@ -62,7 +62,7 @@ export default function App() {
       const [err, account] = await to(accountProfile());
       if (err) return;
 
-      dispatch(updateProfile(account!));
+      dispatch(updateProfile(account));
       setRoutes(adminRoutes);
       return;
     }
