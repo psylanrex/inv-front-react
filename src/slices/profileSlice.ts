@@ -1,4 +1,5 @@
 import { RootState } from "@/app/store";
+import { saveVendorId } from "@/utils/utils";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type VendorAddress = {
@@ -111,6 +112,7 @@ export const profileSlice = createSlice({
   reducers: {
     updateProfile: (state, action: PayloadAction<ProfileState>) => {
       const fields = action.payload;
+      saveVendorId(fields.id);
       Object.assign(state, fields);
     },
     resetProfile: (state) => {

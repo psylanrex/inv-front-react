@@ -218,7 +218,6 @@ export default function NavbarAdmin(props: NavbarAdminProps) {
             user={{
               name: profile.name,
               img: "/img/avatar/avatar.png",
-              info: profile.balance,
             }}
           />
         </li>

@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BoxArrowInRight } from "react-bootstrap-icons";
 import {
   Button,
@@ -23,7 +23,7 @@ type FormData = {
 
 export default function Login() {
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
+  const params = useParams();
   const { register, handleSubmit } = useForm<FormData>();
 
   const logins = {
@@ -37,7 +37,7 @@ export default function Login() {
 
   const onSubmit = async (data: FormData) => {
     const [err, res] = await to(
-      authImpersonate({ ...data, vendor_id: searchParams.get("vendor_id")! })
+      authImpersonate({ ...data, vendor_id: params.vendor_id })
     );
     if (err) return toast.error((err as any)?.response?.data?.message);
     saveAccessToken(res.token);
@@ -45,7 +45,7 @@ export default function Login() {
     const [error, account] = await to(accountProfile());
     if (error) return toast.error((error as any)?.response?.data?.message);
 
-    dispatch(updateProfile(account!));
+    dispatch(updateProfile(account));
     toast.success("Login successful");
   };
 
@@ -58,19 +58,25 @@ export default function Login() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputLabel
           label="Username"
-          placeholder="Username"
+          required
+          placeholder="Enter username"
           {...register("user_name")}
         />
         <div className="mb-4">
           <div className="flex flex-row justify-between items-center mb-2">
             <label htmlFor="inputpass" className="inline-block">
               Password
+              <span className="text-red-500"> *</span>
             </label>
             <Link to={logins.forgot_link} className="hover:text-blue-700">
               Forgot password?
             </Link>
           </div>
-          <InputPassword placeholder="Password" {...register("password")} />
+          <InputPassword
+            required
+            placeholder="Enter password"
+            {...register("password")}
+          />
         </div>
         <Checkbox name="remember" label="Remember me" value="1" checked />
 

@@ -35,7 +35,7 @@ export default function VendorStatsItem(props: VendorStatsItemProps) {
         </Column>
         <Column className="flex-1">
           <div
-            className={`rounded-lg rounded-t-none h-full flex flex-col font-bold justify-center items-center p-6 ${addSummaryClass}`}
+            className={`rounded-lg rounded-t-none h-full flex flex-col font-bold justify-center items-center p-6 dark:bg-opacity-20 dark:bg-gray-800 ${addSummaryClass}`}
           >
             {props.summary}
           </div>

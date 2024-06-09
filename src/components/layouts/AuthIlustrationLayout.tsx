@@ -3,6 +3,7 @@ import Footer from "@/components/footer/Footer";
 import { Column, Row } from "@/components/reactdash-ui";
 import { Check2Square } from "react-bootstrap-icons";
 import { useLocation } from "react-router-dom";
+import { registerLink } from "@/utils/utils";
 
 type AuthIlustrationLayoutProps = {
   children: React.ReactNode;
@@ -26,7 +27,7 @@ export default function AuthIlustrationLayout(
     ],
   };
 
-  const isRegister = location.pathname === "/auth/register";
+  const isRegister = location.pathname === registerLink;
   const widthColumn = isRegister ? "lg:w-full" : "lg:w-1/2";
   return (
     <>

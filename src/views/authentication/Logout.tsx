@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { BoxArrowInRight, Check2Circle } from "react-bootstrap-icons";
+import { loginLink } from "@/utils/utils";
 
 export default function Logout() {
   const logout = {
     title: "See You Again !",
     description: "You are now successfully sign out.",
-    login_link: "/auth2/login",
+    login_link: loginLink,
     relogin: "Relogin",
   };
 
