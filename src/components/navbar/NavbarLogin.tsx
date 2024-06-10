@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Logo from "@/components/navbar/Logo";
-import { loginLink, registerLink } from "@/utils/utils";
+// import { loginLink, registerLink } from "@/utils/utils";
 
 export default function NavbarLogin() {
-  const menu = [
-    { title: "Login", url: loginLink },
-    { title: "Register", url: registerLink },
-  ];
+  // const menu = [
+  //   { title: "Login", url: loginLink },
+  //   { title: "Register", url: registerLink },
+  // ];
 
   return (
     <header className="border-b border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-800">
@@ -17,7 +17,7 @@ export default function NavbarLogin() {
         >
           <Logo />
 
-          <ul className="flex ltr:ml-auto rtl:mr-auto mt-2">
+          {/* <ul className="flex ltr:ml-auto rtl:mr-auto mt-2">
             {menu.map((list, index) => (
               <li key={index} className="relative">
                 <Link
@@ -28,7 +28,7 @@ export default function NavbarLogin() {
                 </Link>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </nav>
       </div>
     </header>
