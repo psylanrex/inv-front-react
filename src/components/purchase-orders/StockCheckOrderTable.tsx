@@ -16,9 +16,21 @@ const table_title = {
 
 type KeyTableTitle = keyof typeof table_title;
 
+type ProductStockCheckOrder = {
+  approval_deadline: string;
+  id: number;
+  purchase_order_date: string;
+  purchase_order_number: string;
+  quantity: string;
+  term_percent_due: number;
+  term_period: number;
+  total: string;
+};
+
 type DataStockCheckOrderTable = {
   currentPage: number;
-  products: any[];
+  products: ProductStockCheckOrder[];
+  previousProducts: ProductStockCheckOrder[];
   perPage: number;
 };
 
@@ -26,12 +38,15 @@ export default function StockCheckOrderTable() {
   const [state, setState] = useSetState<DataStockCheckOrderTable>({
     currentPage: 1,
     products: [],
+    previousProducts: [],
     perPage: 8,
   });
 
   useAsyncEffect(async () => {
     const [, res] = await to(purchaseOrdersStockCheck());
     if (res?.length === 0) return;
+    console.log(res);
+    setState({ products: res, previousProducts: res });
   }, []);
 
   // page changed
@@ -57,14 +72,13 @@ export default function StockCheckOrderTable() {
           <SearchForm
             className="!mx-0"
             onSearch={(keyword) => {
-              if (keyword === "") return setState({ products: [] });
+              if (keyword === "")
+                return setState({ products: state.previousProducts });
 
               const regex = new RegExp(keyword, "i");
               setState((state) => ({
-                products: state.products.filter(
-                  (product) =>
-                    regex.test(product.short_name) ||
-                    regex.test(product.item_code)
+                products: state.products.filter((product) =>
+                  regex.test(String(product.id))
                 ),
               }));
             }}
@@ -88,25 +102,27 @@ export default function StockCheckOrderTable() {
             return (
               <tr key={id}>
                 <td>
-                  <div className="leading-5">{cur.item_code}</div>
+                  <div className="leading-5">{cur.id}</div>
                 </td>
                 <td>
-                  <div className="leading-5">{cur.item_code}</div>
+                  <div className="leading-5">{cur.purchase_order_date}</div>
                 </td>
                 <td>
-                  <div className="leading-5">{cur.short_name}</div>
+                  <div className="leading-5">{cur.approval_deadline}</div>
                 </td>
                 <td>
-                  <div className="leading-5">{cur.item_code}</div>
+                  <div className="leading-5">{cur.term_period}</div>
                 </td>
                 <td>
-                  <div className="leading-5">{cur.item_code}</div>
+                  <div className="leading-5">{cur.quantity}</div>
                 </td>
                 <td>
-                  <div className="leading-5">{cur.item_code}</div>
+                  <div className="leading-5">{cur.total}</div>
                 </td>
                 <td>
-                  <div className="leading-5">{cur.item_code}</div>
+                  {/* <Button color="light" size="small">
+                    <PencilSquare className="inline text-indigo-500" />
+                  </Button> */}
                 </td>
               </tr>
             );
