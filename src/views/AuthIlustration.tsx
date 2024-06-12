@@ -27,7 +27,7 @@ export default function AuthIlustration() {
         <Route
           path="/*"
           index
-          element={<Navigate to={`/impersonate/${getVendorId()}`} />}
+          element={<Navigate to={`/impersonate/${getVendorId() ?? 1}`} />}
         />
       </Routes>
     </AuthIlustrationLayout>
