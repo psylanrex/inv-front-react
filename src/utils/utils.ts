@@ -38,3 +38,4 @@ export const logoData = { img: "/img/logo.png", text: "Invitory", url: "#" };
 export const footerCopyright = `Copyright © 2001 - ${dayjs().year()}. Serrf Corp`;
 export const loginLink = "/impersonate";
 export const registerLink = "/impersonate/register";
+export const purcharseDetailLink = "/purchase-orders/details";
