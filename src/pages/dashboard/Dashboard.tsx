@@ -217,7 +217,7 @@ export default function Dashboard() {
             </Heading>
           </Column>
 
-          <div className="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-5">
+          <div className="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xxl:grid-cols-5">
             {purchaseStats.map((item, index) => (
               <PurchaseStatsItem key={index} {...item} />
             ))}
@@ -263,7 +263,7 @@ export default function Dashboard() {
         ))}
 
         <Row className="mb-6 px-4">
-          <div className="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-5">
+          <div className="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-4">
             {getVendorStats().map((item, index) => (
               <VendorStatsItem key={index} {...item} />
             ))}
