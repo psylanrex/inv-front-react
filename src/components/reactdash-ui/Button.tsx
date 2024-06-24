@@ -17,6 +17,7 @@ type ButtonProps = {
   children?: React.ReactNode;
   shape?: keyof typeof ENUM_SHAPE;
   type?: keyof typeof ENUM_BUTTON_TYPE;
+  hidden?: boolean;
 };
 
 export default function Button(props: ButtonProps) {
@@ -31,6 +32,7 @@ export default function Button(props: ButtonProps) {
   const addtype: any = props.type ? BUTTON_TYPES[props.type] : "button";
   const addClass = props.className ? `${props.className} ` : "";
 
+  if (props.hidden) return null;
   return (
     <button
       onClick={props.onClick}

@@ -10,17 +10,22 @@ type InputLabelProps = {
   className?: string;
   type?: React.HTMLInputTypeAttribute;
   disabled?: boolean;
-  onBlur?: any;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   label?: string;
   id?: string;
   name?: string;
-  onChange?: any;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   readOnly?: boolean;
   required?: boolean;
   value?: string | number | readonly string[];
   placeholder?: string;
   shape?: keyof typeof ENUM_SHAPE;
   size?: keyof typeof ENUM_INPUT_LABEL_SIZE;
+  step?: number | string;
+  minLength?: number;
+  maxLength?: number;
+  extra?: React.ReactNode;
+  accept?: string;
 };
 
 const InputLabel = React.forwardRef(
@@ -37,20 +42,29 @@ const InputLabel = React.forwardRef(
 
     return (
       <div className="mb-4">
-        <label htmlFor={props.id} className="inline-block mb-2">
-          {props.label}
-          {props.required && <span className="text-red-500"> *</span>}
-        </label>
+        <div className="flex justify-between mb-2">
+          <label htmlFor={props.id} className="inline-block">
+            <span className="align-sub">
+              {props.label}
+              {props.required && <span className="text-red-500"> *</span>}
+            </span>
+          </label>
+          {props.extra}
+        </div>
         <input
           ref={ref}
           type={addType}
           aria-label={props.label}
           id={props.id}
           name={props.name}
+          accept={props.accept}
           onBlur={props.onBlur}
+          step={props.step}
           onChange={props.onChange}
           placeholder={props.placeholder}
           value={props.value}
+          minLength={props.minLength}
+          maxLength={props.maxLength}
           className={`${addClass}w-full leading-5 relative ${addSize} ${addShape} text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 dark:text-gray-300 dark:bg-gray-700 dark:border-gray-700 dark:focus:border-gray-600${disabled_css}`}
           disabled={props.disabled}
           readOnly={props.readOnly}

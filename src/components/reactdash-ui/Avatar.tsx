@@ -6,7 +6,7 @@ import {
 } from "@/utils/utils.enum";
 
 type AvatarProps = {
-  data: { img: string; name: string };
+  data?: { img: string; name: string };
   shape?: keyof typeof ENUM_SHAPE;
   size?: keyof typeof ENUM_SIZE;
   className?: string;
@@ -25,6 +25,7 @@ export default function Avatar(props: AvatarProps) {
     : AVATAR_SIZES[ENUM_SIZE.medium];
   const addClass = props.className ? ` ${props.className}` : "";
 
+  if (!avatar) return null;
   return (
     <>
       <img

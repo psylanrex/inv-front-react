@@ -13,6 +13,7 @@
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@headlessui/react": "^1.7.3",
+    "@hookform/error-message": "^2.0.1",
     "@reduxjs/toolkit": "^2.2.5",
     "@south-paw/react-vector-maps": "^3.2.0",
     "@splidejs/react-splide": "^0.7.12",
@@ -22,6 +23,7 @@
     "chart.js": "^3.9.1",
     "dayjs": "^1.11.11",
     "html-react-parser": "^3.0.4",
+    "lodash": "^4.17.21",
     "prism-react-renderer": "^2.3.0",
     "react": "^18.2.0",
     "react-bootstrap-icons": "^1.9.1",
@@ -39,6 +41,7 @@
     "yet-another-react-lightbox": "^3.15.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.5",
     "@types/node": "^20.12.12",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
