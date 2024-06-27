@@ -133,7 +133,7 @@ export default function OpenOrderDetails() {
                           PO #
                         </td>
                         <td className="leading-5 border border-black-600">
-                          {state.data?.purchase_order.purchase_order_number}
+                          {state.data?.purchase_order?.purchase_order_number}
                         </td>
                       </tr>
                       <tr>
@@ -145,8 +145,8 @@ export default function OpenOrderDetails() {
                             className={`text-sm px-4 py-1 font-semibold leading-tight text-center rounded-full text-yellow-700 bg-yellow-100`}
                           >
                             {
-                              state.data?.purchase_order.purchase_order_status
-                                .purchase_order_status
+                              state.data?.purchase_order?.purchase_order_status
+                                ?.purchase_order_status
                             }
                           </span>
                         </td>
@@ -156,7 +156,7 @@ export default function OpenOrderDetails() {
                           PO Date
                         </td>
                         <td className="leading-5 border border-black-600">
-                          {state.data?.purchase_order.purchase_order_date}
+                          {state.data?.purchase_order?.purchase_order_date}
                         </td>
                       </tr>
                       <tr>
@@ -164,7 +164,7 @@ export default function OpenOrderDetails() {
                           Category
                         </td>
                         <td className="leading-5 border border-black-600">
-                          {state.data?.purchase_order.category.name}
+                          {state.data?.purchase_order?.category?.name}
                         </td>
                       </tr>
                       <tr className="bg-gray-100 dark:bg-gray-900 dark:bg-opacity-40">
@@ -173,7 +173,7 @@ export default function OpenOrderDetails() {
                         </td>
                         <td className="leading-5 border border-black-600">
                           Net {state.data?.purchase_order?.term_period} /{" "}
-                          {state.data?.purchase_order.term_percent_due}%
+                          {state.data?.purchase_order?.term_percent_due}%
                         </td>
                       </tr>
                     </tbody>

@@ -10,7 +10,7 @@ import { Printer, SuitcaseLg } from "react-bootstrap-icons";
 import { useAsyncEffect, useSetState } from "ahooks";
 import {
   PurchaseOrderDetail,
-  purchaseOrderDetails,
+  purchasePendingOrderDetails,
 } from "@/api/purchase-orders";
 import to from "await-to-js";
 import { currencyFormatter } from "@/utils/utils";
@@ -38,7 +38,7 @@ export default function PendingOrderDetail() {
   useAsyncEffect(async () => {
     if (!params.order_id) return;
     setState({ loading: true });
-    const [err, data] = await to(purchaseOrderDetails(params.order_id));
+    const [err, data] = await to(purchasePendingOrderDetails(params.order_id));
     if (err) return setState({ loading: false });
     setState({ data, loading: false });
   }, [params]);
@@ -83,7 +83,7 @@ export default function PendingOrderDetail() {
                           PO #
                         </td>
                         <td className="leading-5 border border-black-600">
-                          {state.data?.purchase_order.purchase_order_number}
+                          {state.data?.purchase_order?.purchase_order_number}
                         </td>
                       </tr>
                       <tr>
@@ -95,8 +95,8 @@ export default function PendingOrderDetail() {
                             className={`text-sm px-4 py-1 font-semibold leading-tight text-center rounded-full text-yellow-700 bg-yellow-100`}
                           >
                             {
-                              state.data?.purchase_order.purchase_order_status
-                                .purchase_order_status
+                              state.data?.purchase_order?.purchase_order_status
+                                ?.purchase_order_status
                             }
                           </span>
                         </td>
@@ -106,7 +106,7 @@ export default function PendingOrderDetail() {
                           PO Date
                         </td>
                         <td className="leading-5 border border-black-600">
-                          {state.data?.purchase_order.purchase_order_date}
+                          {state.data?.purchase_order?.purchase_order_date}
                         </td>
                       </tr>
                       <tr>
@@ -114,7 +114,7 @@ export default function PendingOrderDetail() {
                           Category
                         </td>
                         <td className="leading-5 border border-black-600">
-                          {state.data?.purchase_order.category.name}
+                          {state.data?.purchase_order?.category?.name}
                         </td>
                       </tr>
                       <tr className="bg-gray-100 dark:bg-gray-900 dark:bg-opacity-40">
@@ -123,7 +123,7 @@ export default function PendingOrderDetail() {
                         </td>
                         <td className="leading-5 border border-black-600">
                           Net {state.data?.purchase_order?.term_period} /{" "}
-                          {state.data?.purchase_order.term_percent_due}%
+                          {state.data?.purchase_order?.term_percent_due}%
                         </td>
                       </tr>
                     </tbody>

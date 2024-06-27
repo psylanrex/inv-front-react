@@ -100,6 +100,13 @@ export const purchaseOrderDetails = async (
   return res.data;
 };
 
+export const purchasePendingOrderDetails = async (
+  id: string
+): Promise<PurchaseOrderDetail> => {
+  const res = await API.get(`api/purchase-orders/pending/details/${id}`);
+  return res.data;
+};
+
 export const createInvoice = async (
   id: string,
   data: any
