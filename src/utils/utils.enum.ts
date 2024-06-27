@@ -594,3 +594,8 @@ export const INPUT_PASSWORD_SIZES = {
   [ENUM_INPUT_PASSWORD_SIZE.medium]: "py-2 px-4",
   [ENUM_INPUT_PASSWORD_SIZE.large]: "py-3 px-6",
 };
+
+export enum ENUM_PURCHASE_ORDER {
+  pending = "pending",
+  open = "open",
+}

@@ -1,27 +1,17 @@
 import { Search } from "react-bootstrap-icons";
-import { useForm } from "react-hook-form";
 
 type SearchFormProps = {
   className?: string;
-  onSearch?: (keyword: string) => void;
-};
-
-type FormData = {
-  keyword: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 export default function SearchForm(props: SearchFormProps) {
-  const { register, handleSubmit } = useForm<FormData>();
   const addClass = props.className ? props.className : "";
-
-  const onSubmit = (data: FormData) => {
-    if (props.onSearch) props.onSearch(data.keyword);
-  };
 
   return (
     <form
       className={`hidden sm:inline-block md:hidden lg:inline-block mx-5 ${addClass}`}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={(e) => e.preventDefault()}
     >
       <div className="flex flex-wrap items-stretch w-full relative">
         <input
@@ -29,7 +19,7 @@ export default function SearchForm(props: SearchFormProps) {
           className="flex-shrink flex-grow max-w-full leading-5 relative text-sm py-2 px-4 ltr:rounded-l rtl:rounded-r text-gray-800 bg-gray-100 overflow-x-auto focus:outline-none border border-gray-100 focus:border-gray-200 focus:ring-0 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-700 dark:focus:border-gray-600"
           placeholder="Search…"
           aria-label="Search"
-          {...register("keyword")}
+          onChange={props.onChange}
         />
         <div className="flex -mr-px">
           <button

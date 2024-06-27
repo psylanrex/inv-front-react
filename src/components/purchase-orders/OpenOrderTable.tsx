@@ -1,376 +1,226 @@
-import { useState, useCallback } from "react";
-import { PencilSquare } from "react-bootstrap-icons";
+import { useCallback } from "react";
 import {
   SearchForm,
   Pagination,
   Button,
-  Checkbox,
+  SweetAlert,
 } from "@/components/reactdash-ui";
+import { useAsyncEffect, useSetState } from "ahooks";
+import { purchaseCloseOrder, purchaseOpenOrder } from "@/api/purchase-orders";
+import to from "await-to-js";
+import Spin from "@/components/reactdash-ui/Spin";
+import { useNavigate } from "react-router-dom";
+import { purcharseDetailLink } from "@/utils/utils";
 
-export default function OpenOrderTable(props) {
-  // data text
-  const action_text = {
-    add: "Add New",
-    status: "Status",
-    complete: "Complete",
-    processing: "Processing",
-    shipped: "Shipped",
-    cancelled: "Cancelled",
-    pending: "Pending",
-    refund: "Refund",
-    apply: "Apply",
-  };
-  // data table
-  const table_title = {
-    id: "PO #",
-    date: "PO Date",
-    received: "Received",
-    missing: "Missing",
-    total: "Total",
-    status: "Order Status",
-    quantity: "Quantity",
-    invoice_deadline: "Invoice Deadline",
-    action: "Action",
-  };
-  const data_table = [
-    {
-      id: "25",
-      code: "inv21",
-      date: "27/05/2022",
-      received: "29/05/2022",
-      img: "/img/avatar/avatar8.png",
-      url: "/",
-      total: 365,
-      missing: "29/05/2022",
-      status: "Processing",
-      invoice_deadline: "29/05/2022",
-      quantity: 165,
-    },
-    {
-      id: "24",
-      code: "inv22",
-      date: "27/05/2022",
-      received: "29/05/2022",
-      img: "/img/avatar/avatar7.png",
-      url: "/",
-      total: 365,
-      missing: "29/05/2022",
-      status: "Processing",
-      invoice_deadline: "29/05/2022",
-      quantity: 165,
-    },
-    {
-      id: "23",
-      code: "inv23",
-      date: "27/05/2022",
-      received: "29/05/2022",
-      img: "/img/avatar/avatar6.png",
-      url: "/",
-      total: 365,
-      missing: "29/05/2022",
-      status: "Complete",
-      invoice_deadline: "29/05/2022",
-      quantity: 165,
-    },
-    {
-      id: "22",
-      code: "inv24",
-      date: "26/05/2022",
-      received: "28/05/2022",
-      img: "/img/avatar/avatar5.png",
-      url: "/",
-      total: 365,
-      missing: "28/05/2022",
-      status: "Complete",
-      invoice_deadline: "29/05/2022",
-      quantity: 165,
-    },
-    {
-      id: "21",
-      code: "inv25",
-      date: "26/05/2022",
-      received: "28/05/2022",
-      img: "/img/avatar/avatar4.png",
-      url: "/",
-      total: 135,
-      missing: "28/05/2022",
-      status: "Shipped",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "20",
-      code: "inv26",
-      date: "25/05/2022",
-      received: "28/05/2022",
-      img: "/img/avatar/avatar3.png",
-      url: "/",
-      total: 135,
-      missing: "28/05/2022",
-      status: "Shipped",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "19",
-      code: "inv27",
-      date: "25/05/2022",
-      received: "28/05/2022",
-      img: "/img/avatar/avatar2.png",
-      url: "/",
-      total: 135,
-      missing: "28/05/2022",
-      status: "Canceled",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "18",
-      code: "inv28",
-      date: "24/05/2022",
-      received: "26/05/2022",
-      img: "/img/avatar/avatar2.png",
-      url: "/",
-      total: 135,
-      missing: "26/05/2022",
-      status: "Canceled",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "17",
-      code: "inv29",
-      date: "24/05/2022",
-      received: "26/05/2022",
-      img: "/img/avatar/avatar8.png",
-      url: "/",
-      total: 135,
-      missing: "26/05/2022",
-      status: "Pending",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "15",
-      code: "inv30",
-      date: "24/05/2022",
-      received: "26/05/2022",
-      img: "/img/avatar/avatar7.png",
-      url: "/",
-      total: 135,
-      missing: "26/05/2022",
-      status: "Complete",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "14",
-      code: "inv31",
-      date: "23/05/2022",
-      received: "25/05/2022",
-      img: "/img/avatar/avatar6.png",
-      url: "/",
-      total: 135,
-      missing: "25/05/2022",
-      status: "Complete",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "13",
-      code: "inv32",
-      date: "23/05/2022",
-      received: "25/05/2022",
-      img: "/img/avatar/avatar5.png",
-      url: "/",
-      total: 135,
-      missing: "25/05/2022",
-      status: "Complete",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "12",
-      code: "inv33",
-      date: "23/05/2022",
-      received: "25/05/2022",
-      img: "/img/avatar/avatar4.png",
-      url: "/",
-      total: 135,
-      missing: "25/05/2022",
-      status: "Complete",
-      invoice_deadline: "29/05/2022",
-      quantity: 35,
-    },
-    {
-      id: "11",
-      code: "inv34",
-      date: "23/05/2022",
-      received: "25/05/2022",
-      img: "/img/avatar/avatar3.png",
-      url: "/",
-      total: 265,
-      missing: "25/05/2022",
-      status: "Complete",
-      invoice_deadline: "29/05/2022",
-      quantity: 165,
-    },
-    {
-      id: "10",
-      code: "inv35",
-      date: "22/05/2022",
-      received: "24/05/2022",
-      img: "/img/avatar/avatar2.png",
-      url: "/",
-      total: 265,
-      missing: "24/05/2022",
-      status: "Complete",
-      invoice_deadline: "29/05/2022",
-      quantity: 165,
-    },
-  ];
-  // total data & max item per page
-  let total_data = data_table.length;
-  let data_per_page = 8;
-  const latestdata = [...data_table].sort((a, b) => b.id - a.id);
+const table_title = {
+  id: "PO #",
+  date: "PO Date",
+  quantity: "Quantity",
+  received: "Received",
+  missing: "Missing",
+  total: "Total",
+  status: "Order Status",
+  invoice_deadline: "Invoice Deadline",
+  action: "Action",
+};
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
+type KeyTableTitle = keyof typeof table_title;
+
+type ProductOpenOrderTable = {
+  id: number;
+  invoice_window_end: string;
+  missing: string;
+  purchase_order_date: string;
+  purchase_order_number: string;
+  purchase_order_status: string;
+  quantity: string;
+  received: string;
+  total: string;
+};
+
+type DataOpenOrderTable = {
+  currentPage: number;
+  products: ProductOpenOrderTable[];
+  perPage: number;
+  loading: boolean;
+  keyword: string;
+};
+
+export default function OpenOrderTable() {
+  const navigate = useNavigate();
+  const [state, setState] = useSetState<DataOpenOrderTable>({
+    currentPage: 1,
+    products: [],
+    perPage: 8,
+    loading: false,
+    keyword: "",
+  });
+
+  const fetchOpenOrder = async () => {
+    setState({ loading: true });
+    const [err, data] = await to(purchaseOpenOrder());
+    if (err) return setState({ loading: false });
+    setState({ products: data, loading: false });
+  };
+
+  useAsyncEffect(async () => {
+    await fetchOpenOrder();
+  }, []);
+
+  // slice data_table
+  const currentData = state.products
+    .filter((product) => {
+      if (!state.keyword) return true;
+
+      const regex = new RegExp(state.keyword, "i");
+      return (
+        regex.test(product.purchase_order_number) ||
+        regex.test(product.purchase_order_date) ||
+        regex.test(product.purchase_order_status) ||
+        regex.test(product.invoice_window_end) ||
+        regex.test(product.quantity) ||
+        regex.test(product.received) ||
+        regex.test(product.missing) ||
+        regex.test(product.total)
+      );
+    })
+    .slice(
+      (state.currentPage - 1) * state.perPage,
+      (state.currentPage - 1) * state.perPage + state.perPage
+    );
+
   // page changed
   const onPageChanged = useCallback(
-    (event, page) => {
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, page: number) => {
       event.preventDefault();
-      setCurrentPage(page);
+      setState({ currentPage: page });
     },
-    [setCurrentPage]
+    [setState]
   );
-  // slice data_table
-  const currentData = latestdata.slice(
-    (currentPage - 1) * data_per_page,
-    (currentPage - 1) * data_per_page + data_per_page
-  );
-  // Check all
-  const [isCheckAll, setIsCheckAll] = useState(false);
-  const [isCheck, setIsCheck] = useState([]);
-  const handleSelectAll = (e) => {
-    setIsCheckAll(!isCheckAll);
-    setIsCheck(currentData.map((li) => li.id));
-    if (isCheckAll) {
-      setIsCheck([]);
-    }
-  };
-  const handleClick = (e) => {
-    const { id, checked } = e.target;
-    setIsCheck([...isCheck, id]);
-    if (!checked) {
-      setIsCheck(isCheck.filter((item) => item !== id));
-    }
-  };
 
   return (
     <div>
-      <div className="md:flex md:justify-end mb-3">
+      <div className="flex justify-end mb-3">
         <div>
           {/* Search Form */}
-          <SearchForm className="!mx-0" />
+          <SearchForm
+            className="!mx-0"
+            onChange={(e) => {
+              setState({ keyword: e.target.value });
+            }}
+          />
         </div>
       </div>
 
-      <table className="table-sorter table-bordered-bottom w-full text-gray-500 dark:text-gray-400 dataTable-table">
-        <thead>
-          <tr className="bg-gray-200 dark:bg-gray-900 dark:bg-opacity-40">
-            <th>
-              <Checkbox
-                name="selectAll"
-                id="selectAll"
-                onChange={handleSelectAll}
-                checked={isCheckAll}
-              />
-            </th>
-            <th>{table_title.id}</th>
-            <th>{table_title.date}</th>
-            <th>{table_title.quantity}</th>
-            <th>{table_title.received}</th>
-            <th>{table_title.missing}</th>
-            <th>{table_title.total}</th>
-            <th>{table_title.status}</th>
-            <th>{table_title.invoice_deadline}</th>
-            <th>{table_title.action}</th>
-          </tr>
-        </thead>
+      <Spin loading={state.loading}>
+        <table className="table-sorter table-bordered-bottom w-full text-gray-500 dark:text-gray-400 dataTable-table">
+          <thead>
+            <tr className="bg-gray-200 dark:bg-gray-900 dark:bg-opacity-40">
+              {Object.keys(table_title).map((key, id) => (
+                <th className="text-left" key={id}>
+                  {table_title[key as KeyTableTitle]}
+                </th>
+              ))}
+            </tr>
+          </thead>
 
-        <tbody>
-          {currentData.map((order, id) => {
-            const bg_color =
-              order.status === "Complete"
-                ? "text-green-700 bg-green-100"
-                : order.status === "Processing"
-                ? "text-yellow-700 bg-yellow-100"
-                : order.status === "Cancelled"
-                ? "text-red-700 bg-red-100"
-                : order.status === "Shipped"
-                ? "text-indigo-700 bg-indigo-100"
-                : order.status === "Pending"
-                ? "text-cyan-700 bg-cyan-100"
-                : order.status === "Cancelled"
-                ? "text-gray-700 bg-gray-100"
-                : "text-pink-700 bg-pink-100";
-            return (
-              <tr key={id}>
-                <td>
-                  <Checkbox
-                    name={order.code}
-                    id={order.id}
-                    onChange={handleClick}
-                    checked={isCheck.includes(order.id)}
-                  />
-                </td>
-                <td>
-                  <div className="leading-5">INV{order.id}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.date}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.quantity}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.received}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.missing}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.total}</div>
-                </td>
-                <td>
-                  <div
-                    className={`text-sm px-2 py-1 font-semibold leading-tight text-center rounded-full ${bg_color}`}
-                  >
-                    {order.status}
-                  </div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.invoice_deadline}</div>
-                </td>
-                <td className="text-center">
-                  <a href={order.url}>
-                    <Button color="light" size="small">
-                      <PencilSquare className="inline text-indigo-500" />
+          <tbody>
+            {currentData.map((order, id) => {
+              const classRow =
+                id % 2 === 0
+                  ? ""
+                  : "bg-gray-100 dark:bg-gray-900 dark:bg-opacity-40";
+              return (
+                <tr key={id} className={classRow}>
+                  <td>
+                    <div className="leading-5">
+                      {order.purchase_order_number}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.purchase_order_date}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.quantity}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.received}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.missing}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.total}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">
+                      {order.purchase_order_status}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.invoice_window_end}</div>
+                  </td>
+                  <td className="flex flex-wrap gap-2">
+                    <Button
+                      color="success"
+                      size="small"
+                      onClick={() => {
+                        navigate(purcharseDetailLink("open", order.id));
+                      }}
+                    >
+                      View
                     </Button>
-                  </a>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                    <SweetAlert
+                      title="Close"
+                      btn_color="danger"
+                      btn_size="small"
+                      data={{
+                        title: "Are you sure?",
+                        icon: "question",
+                        text: "You won't be able to revert this!",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it",
+                        cancelButtonText: "No, cancel!",
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                      }}
+                      onResult={async (result, swal) => {
+                        if (result.isConfirmed) {
+                          swal.fire({
+                            title: "Processing...",
+                            html: "Please wait...",
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                          });
+
+                          const [err] = await to(purchaseCloseOrder(order.id));
+                          if (err) {
+                            swal.fire("Error", "Something went wrong", "error");
+                            return;
+                          }
+
+                          swal.fire(
+                            "Deleted!",
+                            "Your data has been deleted.",
+                            "success"
+                          );
+                          await fetchOpenOrder();
+                        }
+                      }}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Spin>
       <Pagination
-        totalData={total_data}
-        perPage={data_per_page}
+        totalData={currentData.length}
+        perPage={state.perPage}
         className="mt-8"
         onPageChanged={onPageChanged}
-        currentPage={currentPage}
+        currentPage={state.currentPage}
       />
     </div>
   );

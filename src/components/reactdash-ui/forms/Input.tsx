@@ -19,6 +19,8 @@ type InputProps = {
   shape?: keyof typeof ENUM_SHAPE;
   type?: React.HTMLInputTypeAttribute;
   size?: keyof typeof ENUM_INPUT_SIZE;
+  min?: string | number;
+  max?: string | number;
 };
 
 export default function Input(props: InputProps) {
@@ -46,6 +48,8 @@ export default function Input(props: InputProps) {
             disabled={props.disabled}
             readOnly={props.readOnly}
             required={props.required}
+            min={props.min}
+            max={props.max}
             className={`${addClass}w-full block leading-5 relative pt-5 pb-2 px-4 ${addShape} text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 dark:text-gray-300 dark:bg-gray-700 dark:border-gray-700 dark:focus:border-gray-600 peer${disabled_css}`}
             placeholder=" "
           />
@@ -69,6 +73,8 @@ export default function Input(props: InputProps) {
           disabled={props.disabled}
           readOnly={props.readOnly}
           required={props.required}
+          min={props.min}
+          max={props.max}
         />
       )}
     </>

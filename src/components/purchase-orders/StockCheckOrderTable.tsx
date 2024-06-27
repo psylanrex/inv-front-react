@@ -1,332 +1,156 @@
-import { useState, useCallback } from "react";
-import { PencilSquare } from "react-bootstrap-icons";
-import {
-  SearchForm,
-  Pagination,
-  Button,
-  Checkbox,
-} from "@/components/reactdash-ui";
+import { useCallback } from "react";
+import { SearchForm, Pagination } from "@/components/reactdash-ui";
+import { useAsyncEffect, useSetState } from "ahooks";
+import { purchaseStockCheckOrder } from "@/api/purchase-orders";
+import to from "await-to-js";
+import Spin from "@/components/reactdash-ui/Spin";
 
-export default function StockCheckOrderTable(props) {
-  // data text
-  const action_text = {
-    add: "Add New",
-    status: "Status",
-    complete: "Complete",
-    processing: "Processing",
-    shipped: "Shipped",
-    cancelled: "Cancelled",
-    pending: "Pending",
-    refund: "Refund",
-    apply: "Apply",
-  };
-  // data table
-  const table_title = {
-    id: "PO #",
-    date: "PO Date",
-    approval_deadline: "Approval Deadline",
-    term_period: "Term Period",
-    quantity: "Quantity",
-    total: "Total",
-    action: "Action",
-  };
-  const data_table = [
-    {
-      id: "25",
-      code: "inv21",
-      date: "27/05/2022",
-      approval_deadline: "29/05/2022",
-      img: "/img/avatar/avatar8.png",
-      url: "/",
-      term_period: "29/05/2022",
-      quantity: 165,
-      total: 100,
-    },
-    {
-      id: "24",
-      code: "inv22",
-      date: "27/05/2022",
-      approval_deadline: "29/05/2022",
-      img: "/img/avatar/avatar7.png",
-      url: "/",
-      term_period: "29/05/2022",
-      quantity: 165,
-      total: 100,
-    },
-    {
-      id: "23",
-      code: "inv23",
-      date: "27/05/2022",
-      approval_deadline: "29/05/2022",
-      img: "/img/avatar/avatar6.png",
-      url: "/",
-      term_period: "29/05/2022",
-      quantity: 165,
-      total: 100,
-    },
-    {
-      id: "22",
-      code: "inv24",
-      date: "26/05/2022",
-      approval_deadline: "28/05/2022",
-      img: "/img/avatar/avatar5.png",
-      url: "/",
-      term_period: "28/05/2022",
-      quantity: 165,
-      total: 100,
-    },
-    {
-      id: "21",
-      code: "inv25",
-      date: "26/05/2022",
-      approval_deadline: "28/05/2022",
-      img: "/img/avatar/avatar4.png",
-      url: "/",
-      term_period: "28/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "20",
-      code: "inv26",
-      date: "25/05/2022",
-      approval_deadline: "28/05/2022",
-      img: "/img/avatar/avatar3.png",
-      url: "/",
-      term_period: "28/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "19",
-      code: "inv27",
-      date: "25/05/2022",
-      approval_deadline: "28/05/2022",
-      img: "/img/avatar/avatar2.png",
-      url: "/",
-      term_period: "28/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "18",
-      code: "inv28",
-      date: "24/05/2022",
-      approval_deadline: "26/05/2022",
-      img: "/img/avatar/avatar2.png",
-      url: "/",
-      term_period: "26/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "17",
-      code: "inv29",
-      date: "24/05/2022",
-      approval_deadline: "26/05/2022",
-      img: "/img/avatar/avatar8.png",
-      url: "/",
-      term_period: "26/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "15",
-      code: "inv30",
-      date: "24/05/2022",
-      approval_deadline: "26/05/2022",
-      img: "/img/avatar/avatar7.png",
-      url: "/",
-      term_period: "26/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "14",
-      code: "inv31",
-      date: "23/05/2022",
-      approval_deadline: "25/05/2022",
-      img: "/img/avatar/avatar6.png",
-      url: "/",
-      term_period: "25/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "13",
-      code: "inv32",
-      date: "23/05/2022",
-      approval_deadline: "25/05/2022",
-      img: "/img/avatar/avatar5.png",
-      url: "/",
-      term_period: "25/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "12",
-      code: "inv33",
-      date: "23/05/2022",
-      approval_deadline: "25/05/2022",
-      img: "/img/avatar/avatar4.png",
-      url: "/",
-      term_period: "25/05/2022",
-      quantity: 35,
-      total: 100,
-    },
-    {
-      id: "11",
-      code: "inv34",
-      date: "23/05/2022",
-      approval_deadline: "25/05/2022",
-      img: "/img/avatar/avatar3.png",
-      url: "/",
-      term_period: "25/05/2022",
-      quantity: 165,
-      total: 100,
-    },
-    {
-      id: "10",
-      code: "inv35",
-      date: "22/05/2022",
-      approval_deadline: "24/05/2022",
-      img: "/img/avatar/avatar2.png",
-      url: "/",
-      term_period: "24/05/2022",
-      quantity: 165,
-      total: 100,
-    },
-  ];
-  // total data & max item per page
-  let total_data = data_table.length;
-  let data_per_page = 8;
-  const latestdata = [...data_table].sort((a, b) => b.id - a.id);
+const table_title = {
+  id: "PO #",
+  date: "PO Date",
+  approval_deadline: "Approval Deadline",
+  term_period: "Term Period",
+  quantity: "Quantity",
+  total: "Total",
+  action: "Action",
+};
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
+type KeyTableTitle = keyof typeof table_title;
+
+type ProductStockCheckOrder = {
+  approval_deadline: string;
+  id: number;
+  purchase_order_date: string;
+  purchase_order_number: string;
+  quantity: string;
+  term_percent_due: number;
+  term_period: number;
+  total: string;
+};
+
+type DataStockCheckOrderTable = {
+  currentPage: number;
+  products: ProductStockCheckOrder[];
+  perPage: number;
+  loading: boolean;
+  keyword: string;
+};
+
+export default function StockCheckOrderTable() {
+  const [state, setState] = useSetState<DataStockCheckOrderTable>({
+    currentPage: 1,
+    products: [],
+    perPage: 8,
+    loading: false,
+    keyword: "",
+  });
+
+  const fetchStockCheckOrder = async () => {
+    setState({ loading: true });
+    const [err, data] = await to(purchaseStockCheckOrder());
+    if (err) return setState({ loading: false });
+    setState({ products: data, loading: false });
+  };
+
+  useAsyncEffect(async () => {
+    await fetchStockCheckOrder();
+  }, []);
+
+  // slice data_table
+  const currentData = state.products
+    .filter((product) => {
+      if (!state.keyword) return true;
+
+      const regex = new RegExp(state.keyword, "i");
+      return (
+        regex.test(product.approval_deadline) ||
+        regex.test(product.purchase_order_number) ||
+        regex.test(product.purchase_order_date) ||
+        regex.test(product.quantity) ||
+        regex.test(product.total) ||
+        regex.test(`${product.term_period}`) ||
+        regex.test(`${product.term_percent_due}`)
+      );
+    })
+    .slice(
+      (state.currentPage - 1) * state.perPage,
+      (state.currentPage - 1) * state.perPage + state.perPage
+    );
+
   // page changed
   const onPageChanged = useCallback(
-    (event, page) => {
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, page: number) => {
       event.preventDefault();
-      setCurrentPage(page);
+      setState({ currentPage: page });
     },
-    [setCurrentPage]
+    [setState]
   );
-  // slice data_table
-  const currentData = latestdata.slice(
-    (currentPage - 1) * data_per_page,
-    (currentPage - 1) * data_per_page + data_per_page
-  );
-  // Check all
-  const [isCheckAll, setIsCheckAll] = useState(false);
-  const [isCheck, setIsCheck] = useState([]);
-  const handleSelectAll = (e) => {
-    setIsCheckAll(!isCheckAll);
-    setIsCheck(currentData.map((li) => li.id));
-    if (isCheckAll) {
-      setIsCheck([]);
-    }
-  };
-  const handleClick = (e) => {
-    const { id, checked } = e.target;
-    setIsCheck([...isCheck, id]);
-    if (!checked) {
-      setIsCheck(isCheck.filter((item) => item !== id));
-    }
-  };
 
   return (
     <div>
-      <div className="md:flex md:justify-end mb-3">
+      <div className="flex justify-end mb-3">
         <div>
           {/* Search Form */}
-          <SearchForm className="!mx-0" />
+          <SearchForm
+            className="!mx-0"
+            onChange={(e) => {
+              setState({ keyword: e.target.value });
+            }}
+          />
         </div>
       </div>
 
-      <table className="table-sorter table-bordered-bottom w-full text-gray-500 dark:text-gray-400 dataTable-table">
-        <thead>
-          <tr className="bg-gray-200 dark:bg-gray-900 dark:bg-opacity-40">
-            <th>
-              <Checkbox
-                name="selectAll"
-                id="selectAll"
-                onChange={handleSelectAll}
-                checked={isCheckAll}
-              />
-            </th>
-            <th>{table_title.id}</th>
-            <th>{table_title.date}</th>
-            <th>{table_title.approval_deadline}</th>
-            <th>{table_title.quantity}</th>
-            <th>{table_title.term_period}</th>
-            <th>{table_title.total}</th>
-            <th>{table_title.action}</th>
-          </tr>
-        </thead>
+      <Spin loading={state.loading}>
+        <table className="table-sorter table-bordered-bottom w-full text-gray-500 dark:text-gray-400 dataTable-table">
+          <thead>
+            <tr className="bg-gray-200 dark:bg-gray-900 dark:bg-opacity-40">
+              {Object.keys(table_title).map((key, id) => (
+                <th className="text-left" key={id}>
+                  {table_title[key as KeyTableTitle]}
+                </th>
+              ))}
+            </tr>
+          </thead>
 
-        <tbody>
-          {currentData.map((order, id) => {
-            const bg_color =
-              order.status === "Complete"
-                ? "text-green-700 bg-green-100"
-                : order.status === "Processing"
-                ? "text-yellow-700 bg-yellow-100"
-                : order.status === "Cancelled"
-                ? "text-red-700 bg-red-100"
-                : order.status === "Shipped"
-                ? "text-indigo-700 bg-indigo-100"
-                : order.status === "Pending"
-                ? "text-cyan-700 bg-cyan-100"
-                : order.status === "Cancelled"
-                ? "text-gray-700 bg-gray-100"
-                : "text-pink-700 bg-pink-100";
-            return (
-              <tr key={id}>
-                <td>
-                  <Checkbox
-                    name={order.code}
-                    id={order.id}
-                    onChange={handleClick}
-                    checked={isCheck.includes(order.id)}
-                  />
-                </td>
-                <td>
-                  <div className="leading-5">INV{order.id}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.date}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.approval_deadline}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.quantity}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.term_period}</div>
-                </td>
-                <td>
-                  <div className="leading-5">{order.total}</div>
-                </td>
-                <td className="text-center">
-                  <a href={order.url}>
-                    <Button color="light" size="small">
-                      <PencilSquare className="inline text-indigo-500" />
-                    </Button>
-                  </a>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+          <tbody>
+            {currentData.map((order, id) => {
+              return (
+                <tr key={id}>
+                  <td>
+                    <div className="leading-5">
+                      {order.purchase_order_number}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.purchase_order_date}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.approval_deadline}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.term_period}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.quantity}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5">{order.total}</div>
+                  </td>
+                  <td>
+                    <div className="leading-5"></div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Spin>
       <Pagination
-        totalData={total_data}
-        perPage={data_per_page}
+        totalData={currentData.length}
+        perPage={state.perPage}
         className="mt-8"
         onPageChanged={onPageChanged}
-        currentPage={currentPage}
+        currentPage={state.currentPage}
       />
     </div>
   );

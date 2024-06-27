@@ -17,6 +17,7 @@ type ButtonProps = {
   children?: React.ReactNode;
   shape?: keyof typeof ENUM_SHAPE;
   type?: keyof typeof ENUM_BUTTON_TYPE;
+  hidden?: boolean;
 };
 
 export default function Button(props: ButtonProps) {
@@ -33,6 +34,7 @@ export default function Button(props: ButtonProps) {
 
   return (
     <button
+      hidden={props.hidden}
       onClick={props.onClick}
       className={`${addClass}inline-block text-center border leading-5 hover:ring-0 focus:outline-none focus:ring-0 ${addSize} ${addcolor} ${addshape}`}
       type={addtype}

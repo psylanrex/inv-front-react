@@ -1,3 +1,4 @@
+import { ENUM_PURCHASE_ORDER } from "@/utils/utils.enum";
 import dayjs from "dayjs";
 
 export const getAccessToken = () => {
@@ -33,6 +34,20 @@ export const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 });
+
+export const purcharseDetailLink = (
+  status: keyof typeof ENUM_PURCHASE_ORDER,
+  id: number
+) => {
+  switch (status) {
+    case "pending":
+      return `/purchase-orders/pending/details/${id}`;
+    case "open":
+      return `/purchase-orders/open/details/${id}`;
+    default:
+      return "";
+  }
+};
 
 export const logoData = { img: "/img/logo.png", text: "Invitory", url: "#" };
 export const footerCopyright = `Copyright © 2001 - ${dayjs().year()}. Serrf Corp`;
