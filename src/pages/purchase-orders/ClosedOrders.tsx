@@ -1,5 +1,3 @@
-import React from "react";
-
 // components
 import { Preloader, Row, Column, Card } from "@/components/reactdash-ui";
 import ClosedOrderTable from "@/components/purchase-orders/ClosedOrderTable";

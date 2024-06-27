@@ -1,12 +1,13 @@
 import Swal, { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
 import withReactContent, { ReactSweetAlert } from "sweetalert2-react-content";
 import { Button } from "@/components/reactdash-ui";
-import { ENUM_BUTTON_COLOR } from "@/utils/utils.enum";
+import { ENUM_BUTTON_COLOR, ENUM_BUTTON_SIZE } from "@/utils/utils.enum";
 
 type SweetAlertProps = {
   title: string;
   data: SweetAlertOptions;
   btn_color?: keyof typeof ENUM_BUTTON_COLOR;
+  btn_size?: keyof typeof ENUM_BUTTON_SIZE;
   onResult?: (
     result: SweetAlertResult,
     swal: typeof Swal & ReactSweetAlert
@@ -27,9 +28,14 @@ export default function SweetAlert(props: SweetAlertProps) {
       },
     });
   };
+
   return (
     <>
-      <Button color={props.btn_color} onClick={handleButton}>
+      <Button
+        color={props.btn_color}
+        size={props.btn_size}
+        onClick={handleButton}
+      >
         {props.title}
       </Button>
     </>

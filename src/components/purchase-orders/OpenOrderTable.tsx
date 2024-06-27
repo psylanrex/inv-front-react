@@ -41,9 +41,9 @@ type ProductOpenOrderTable = {
 type DataOpenOrderTable = {
   currentPage: number;
   products: ProductOpenOrderTable[];
-  previousProducts: ProductOpenOrderTable[];
   perPage: number;
   loading: boolean;
+  keyword: string;
 };
 
 export default function OpenOrderTable() {
@@ -51,16 +51,16 @@ export default function OpenOrderTable() {
   const [state, setState] = useSetState<DataOpenOrderTable>({
     currentPage: 1,
     products: [],
-    previousProducts: [],
     perPage: 8,
     loading: false,
+    keyword: "",
   });
 
   const fetchOpenOrder = async () => {
     setState({ loading: true });
-    const [, res] = await to(purchaseOpenOrder());
-    if (res?.length === 0) return setState({ loading: false });
-    setState({ products: res, previousProducts: res, loading: false });
+    const [err, data] = await to(purchaseOpenOrder());
+    if (err) return setState({ loading: false });
+    setState({ products: data, loading: false });
   };
 
   useAsyncEffect(async () => {
@@ -68,10 +68,26 @@ export default function OpenOrderTable() {
   }, []);
 
   // slice data_table
-  const currentData = state.products.slice(
-    (state.currentPage - 1) * state.perPage,
-    (state.currentPage - 1) * state.perPage + state.perPage
-  );
+  const currentData = state.products
+    .filter((product) => {
+      if (!state.keyword) return true;
+
+      const regex = new RegExp(state.keyword, "i");
+      return (
+        regex.test(product.purchase_order_number) ||
+        regex.test(product.purchase_order_date) ||
+        regex.test(product.purchase_order_status) ||
+        regex.test(product.invoice_window_end) ||
+        regex.test(product.quantity) ||
+        regex.test(product.received) ||
+        regex.test(product.missing) ||
+        regex.test(product.total)
+      );
+    })
+    .slice(
+      (state.currentPage - 1) * state.perPage,
+      (state.currentPage - 1) * state.perPage + state.perPage
+    );
 
   // page changed
   const onPageChanged = useCallback(
@@ -90,24 +106,7 @@ export default function OpenOrderTable() {
           <SearchForm
             className="!mx-0"
             onChange={(e) => {
-              const keyword = e.target.value;
-              if (keyword === "")
-                return setState({ products: state.previousProducts });
-
-              const regex = new RegExp(keyword, "i");
-              setState((state) => ({
-                products: state.previousProducts.filter(
-                  (product) =>
-                    regex.test(product.purchase_order_number) ||
-                    regex.test(product.purchase_order_date) ||
-                    regex.test(product.purchase_order_status) ||
-                    regex.test(product.invoice_window_end) ||
-                    regex.test(product.quantity) ||
-                    regex.test(product.received) ||
-                    regex.test(product.missing) ||
-                    regex.test(product.total)
-                ),
-              }));
+              setState({ keyword: e.target.value });
             }}
           />
         </div>
@@ -127,8 +126,12 @@ export default function OpenOrderTable() {
 
           <tbody>
             {currentData.map((order, id) => {
+              const classRow =
+                id % 2 === 0
+                  ? ""
+                  : "bg-gray-100 dark:bg-gray-900 dark:bg-opacity-40";
               return (
-                <tr key={id}>
+                <tr key={id} className={classRow}>
                   <td>
                     <div className="leading-5">
                       {order.purchase_order_number}
@@ -157,12 +160,12 @@ export default function OpenOrderTable() {
                   <td>
                     <div className="leading-5">{order.invoice_window_end}</div>
                   </td>
-                  <td className="flex flex-wrap gap-2 text-center">
+                  <td className="flex flex-wrap gap-2">
                     <Button
                       color="success"
                       size="small"
                       onClick={() => {
-                        navigate(`${purcharseDetailLink}/${order.id}`);
+                        navigate(purcharseDetailLink("open", order.id));
                       }}
                     >
                       View
@@ -170,9 +173,10 @@ export default function OpenOrderTable() {
                     <SweetAlert
                       title="Close"
                       btn_color="danger"
+                      btn_size="small"
                       data={{
                         title: "Are you sure?",
-                        icon: "warning",
+                        icon: "question",
                         text: "You won't be able to revert this!",
                         showCancelButton: true,
                         confirmButtonText: "Yes, delete it",
@@ -182,6 +186,13 @@ export default function OpenOrderTable() {
                       }}
                       onResult={async (result, swal) => {
                         if (result.isConfirmed) {
+                          swal.fire({
+                            title: "Processing...",
+                            html: "Please wait...",
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                          });
+
                           const [err] = await to(purchaseCloseOrder(order.id));
                           if (err) {
                             swal.fire("Error", "Something went wrong", "error");
@@ -205,7 +216,7 @@ export default function OpenOrderTable() {
         </table>
       </Spin>
       <Pagination
-        totalData={state.products.length}
+        totalData={currentData.length}
         perPage={state.perPage}
         className="mt-8"
         onPageChanged={onPageChanged}
