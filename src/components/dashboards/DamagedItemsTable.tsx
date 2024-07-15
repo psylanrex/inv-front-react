@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { SearchForm, Pagination, Heading } from "@/components/reactdash-ui";
 import { ProductDamagedItems } from "@/layouts/dashboard/DamagedItems";
 import { useSetState } from "ahooks";
@@ -24,21 +24,16 @@ type ReturnRateTableProps = {
 
 type DataDamagedItemsTable = {
   currentPage: number;
-  products: ProductDamagedItems[];
+  keyword: string;
   perPage: number;
 };
 
 export default function DamagedItemsTable(props: ReturnRateTableProps) {
   const [state, setState] = useSetState<DataDamagedItemsTable>({
     currentPage: 1,
-    products: [],
+    keyword: "",
     perPage: 8,
   });
-
-  useEffect(() => {
-    if (props.products.length === 0) return;
-    setState({ products: props.products });
-  }, [props.products]);
 
   // page changed
   const onPageChanged = useCallback(
@@ -50,10 +45,21 @@ export default function DamagedItemsTable(props: ReturnRateTableProps) {
   );
 
   // slice data_table
-  const currentData = state.products.slice(
-    (state.currentPage - 1) * state.perPage,
-    (state.currentPage - 1) * state.perPage + state.perPage
-  );
+  const currentData = props.products
+    .filter((product) => {
+      if (!state.keyword) return true;
+
+      const regex = new RegExp(state.keyword, "i");
+      return (
+        regex.test(product.short_name) ||
+        regex.test(product.item_code) ||
+        regex.test(product.unit_cost)
+      );
+    })
+    .slice(
+      (state.currentPage - 1) * state.perPage,
+      (state.currentPage - 1) * state.perPage + state.perPage
+    );
 
   return (
     <div>
@@ -65,17 +71,8 @@ export default function DamagedItemsTable(props: ReturnRateTableProps) {
           {/* Search Form */}
           <SearchForm
             className="!mx-0"
-            onSearch={(keyword) => {
-              if (keyword === "") return setState({ products: props.products });
-
-              const regex = new RegExp(keyword, "i");
-              setState((state) => ({
-                products: state.products.filter(
-                  (product) =>
-                    regex.test(product.short_name) ||
-                    regex.test(product.item_code)
-                ),
-              }));
+            onChange={(e) => {
+              setState({ keyword: e.target.value });
             }}
           />
         </div>
@@ -127,7 +124,7 @@ export default function DamagedItemsTable(props: ReturnRateTableProps) {
         </tbody>
       </table>
       <Pagination
-        totalData={state.products.length}
+        totalData={currentData.length}
         perPage={state.perPage}
         className="mt-8"
         onPageChanged={onPageChanged}

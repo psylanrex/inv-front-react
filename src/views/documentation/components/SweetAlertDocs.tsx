@@ -7,12 +7,13 @@ import {
   Prism,
   SweetAlert,
 } from "@/components/reactdash-ui";
+import { SweetAlertOptions } from "sweetalert2";
 
 export default function SweetAlertDocs() {
   // page title
   const page_title = "Sweet Alert";
   // data alert
-  const data_alert = {
+  const data_alert: SweetAlertOptions = {
     icon: "error",
     title: "Oops...",
     text: "Something went wrong!",
