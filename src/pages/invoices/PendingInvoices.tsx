@@ -1,6 +1,6 @@
 // components
+import PendingInvoiceTable from "@/components/invoices/PendingInvoiceTable";
 import { Preloader, Row, Column, Card } from "@/components/reactdash-ui";
-import { PendingInvoiceTable } from "@/components/invoices/PendingInvoiceTable";
 
 export default function PendingInvoices() {
   return (

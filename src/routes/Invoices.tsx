@@ -9,6 +9,7 @@ import {
   ShippedInvoices,
   ReceivedInvoices,
   CancelledInvoices,
+  InvoiceDetails,
 } from "@/pages/invoices/";
 
 export default function Invoices() {
@@ -20,6 +21,7 @@ export default function Invoices() {
         <Route path="/shipped/*" element={<ShippedInvoices />} />
         <Route path="/received/*" element={<ReceivedInvoices />} />
         <Route path="/cancelled/*" element={<CancelledInvoices />} />
+        <Route path="/details/:invoice_id" element={<InvoiceDetails />} />
       </Routes>
     </AdminLayout>
   );

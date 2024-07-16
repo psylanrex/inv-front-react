@@ -49,6 +49,10 @@ export const purcharseDetailLink = (
   }
 };
 
+export const invoiceDetailLink = (id: number) => {
+  return `/invoices/details/${id}`;
+};
+
 export const logoData = { img: "/img/logo.png", text: "Invitory", url: "#" };
 export const footerCopyright = `Copyright © 2001 - ${dayjs().year()}. Serrf Corp`;
 export const loginLink = "/impersonate";
