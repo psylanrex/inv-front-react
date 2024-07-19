@@ -18,6 +18,7 @@ type ButtonProps = {
   shape?: keyof typeof ENUM_SHAPE;
   type?: keyof typeof ENUM_BUTTON_TYPE;
   hidden?: boolean;
+  disabled?: boolean;
 };
 
 export default function Button(props: ButtonProps) {
@@ -31,12 +32,14 @@ export default function Button(props: ButtonProps) {
   const addshape = props.shape ? BUTTON_SHAPES[props.shape] : "rounded";
   const addtype: any = props.type ? BUTTON_TYPES[props.type] : "button";
   const addClass = props.className ? `${props.className} ` : "";
+  const addClassDisabled = props.disabled ? "opacity-50" : "";
 
   if (props.hidden) return null;
   return (
     <button
+      disabled={props.disabled}
       onClick={props.onClick}
-      className={`${addClass}inline-block text-center border leading-5 hover:ring-0 focus:outline-none focus:ring-0 ${addSize} ${addcolor} ${addshape}`}
+      className={`${addClass}inline-block text-center border leading-5 hover:ring-0 focus:outline-none focus:ring-0 ${addSize} ${addcolor} ${addshape} ${addClassDisabled}`}
       type={addtype}
     >
       {props.children}

@@ -9,6 +9,8 @@ import {
   OpenOrders,
   PendingOrders,
   ClosedOrders,
+  OpenOrderDetails,
+  PendingOrderDetails,
 } from "@/pages/purchase-orders";
 
 export default function PurchaseOrders() {
@@ -16,6 +18,11 @@ export default function PurchaseOrders() {
     <AdminLayout>
       <Routes>
         {/* Purchase Orders */}
+        <Route path="/open/details/:order_id" element={<OpenOrderDetails />} />
+        <Route
+          path="/pending/details/:order_id"
+          element={<PendingOrderDetails />}
+        />
         <Route path="/stock-check/*" element={<StockCheckOrders />} />
         <Route path="/pending/*" element={<PendingOrders />} />
         <Route path="/open/*" element={<OpenOrders />} />

@@ -24,7 +24,6 @@ type AddItemsState = {
   condition: { value: string; title: string }[];
   brand: { value: string; title: string }[];
   step: number;
-  past_step: number;
   editable: {
     open: boolean;
     data?: FormAddItem;
@@ -61,7 +60,6 @@ export default function AddItems() {
     condition: [],
     brand: [],
     step: 0,
-    past_step: 0,
     editable: { open: false, data: undefined },
   });
 
@@ -99,20 +97,11 @@ export default function AddItems() {
 
     switch (state.step) {
       case 0:
-        return setState({
-          step: 1,
-          past_step: state.past_step < 1 ? 1 : state.past_step,
-        });
+        return setState({ step: 1 });
       case 1:
-        return setState({
-          step: 2,
-          past_step: state.past_step < 2 ? 2 : state.past_step,
-        });
+        return setState({ step: 2 });
       case 2:
-        return setState({
-          step: 3,
-          past_step: state.past_step < 3 ? 3 : state.past_step,
-        });
+        return setState({ step: 3 });
       case 3:
         const formData = new FormData();
         Object.keys(data).forEach((key: string) => {
@@ -195,11 +184,12 @@ export default function AddItems() {
     setState({ step: 0 });
   };
 
-  const renderStep = (step: number) => {
+  const renderStep = (step: number, required: boolean) => {
     switch (step) {
       case 0:
         return (
           <ItemInformation
+            required={required}
             register={register}
             getValues={getValues}
             setValue={setValue}
@@ -212,6 +202,7 @@ export default function AddItems() {
       case 1:
         return (
           <ItemImages
+            required={required}
             register={register}
             getValues={getValues}
             setValue={setValue}
@@ -221,6 +212,7 @@ export default function AddItems() {
       case 2:
         return (
           <ItemNameAndDescription
+            required={required}
             register={register}
             getValues={getValues}
             setValue={setValue}
@@ -230,6 +222,7 @@ export default function AddItems() {
       case 3:
         return (
           <ItemConfirmation
+            required={required}
             register={register}
             getValues={getValues}
             setValue={setValue}
@@ -293,16 +286,16 @@ export default function AddItems() {
           <Card className="relative p-6">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div hidden={state.step !== 0}>
-                {state.past_step >= 0 && renderStep(0)}
+                {renderStep(0, state.step === 0)}
               </div>
               <div hidden={state.step !== 1}>
-                {state.past_step >= 1 && renderStep(1)}
+                {renderStep(1, state.step === 1)}
               </div>
               <div hidden={state.step !== 2}>
-                {state.past_step >= 2 && renderStep(2)}
+                {renderStep(2, state.step === 2)}
               </div>
               <div hidden={state.step !== 3}>
-                {state.past_step >= 3 && renderStep(3)}
+                {renderStep(3, state.step === 3)}
               </div>
               <Row className="justify-end gap-2">
                 <Button

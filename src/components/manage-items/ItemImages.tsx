@@ -8,6 +8,7 @@ import {
 } from "react-hook-form";
 
 type ItemImagesProps = {
+  required?: boolean;
   register: UseFormRegister<FormAddItem>;
   getValues: UseFormGetValues<FormAddItem>;
   setValue: UseFormSetValue<FormAddItem>;
@@ -28,14 +29,14 @@ const ItemImages: React.FC<ItemImagesProps> = (props) => {
         </span>
       </Badge>
       <InputLabel
-        required
+        required={props.required}
         label="HD Primary Image"
         type={type}
         accept={accept}
         {...props.register("hd_primary_image")}
       />
       <InputLabel
-        required
+        required={props.required}
         label="HD Secondary Image"
         type={type}
         accept={accept}

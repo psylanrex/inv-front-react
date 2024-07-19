@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { isQuillEmpty } from "@/utils/utils";
 
 type ItemNameAndDescriptionProps = {
+  required?: boolean;
   register: UseFormRegister<FormAddItem>;
   getValues: UseFormGetValues<FormAddItem>;
   setValue: UseFormSetValue<FormAddItem>;
@@ -22,9 +23,9 @@ const ItemNameAndDescription: React.FC<ItemNameAndDescriptionProps> = (
 ) => {
   useEffect(() => {
     props.register("description", {
-      required: "The description field is required.",
+      required: props.required && "The description field is required!",
     });
-  }, [props.register]);
+  }, [props.required]);
 
   return (
     <>
@@ -36,13 +37,13 @@ const ItemNameAndDescription: React.FC<ItemNameAndDescriptionProps> = (
         />
       </Badge>
       <InputLabel
-        required
+        required={props.required}
         label="Name"
         placeholder="Enter name"
         {...props.register("name")}
       />
       <InputLabel
-        required
+        required={props.required}
         label="Short Name (16 Chars)"
         placeholder="Enter short name"
         maxLength={16}

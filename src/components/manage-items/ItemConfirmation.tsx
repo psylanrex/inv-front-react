@@ -20,6 +20,7 @@ import {
 } from "react-hook-form";
 
 type ItemConfirmationProps = {
+  required?: boolean;
   categories: { value: string; title: string }[];
   condition: { value: string; title: string }[];
   brand: { value: string; title: string }[];
@@ -65,7 +66,7 @@ const ItemConfirmation: React.FC<ItemConfirmationProps> = (props) => {
     <>
       <InputLabel
         disabled
-        required
+        required={props.required}
         label="Item Code"
         placeholder="Enter item code"
         minLength={5}
@@ -97,7 +98,7 @@ const ItemConfirmation: React.FC<ItemConfirmationProps> = (props) => {
           <InputGroup.Body>
             <Input
               disabled
-              required
+              required={props.required}
               step={0.01}
               placeholder="0.00"
               type="number"
@@ -109,7 +110,7 @@ const ItemConfirmation: React.FC<ItemConfirmationProps> = (props) => {
       </div>
       <Select
         disabled
-        required
+        required={props.required}
         label="Category"
         placeholder="Choose a category..."
         options={props.categories}
@@ -126,7 +127,7 @@ const ItemConfirmation: React.FC<ItemConfirmationProps> = (props) => {
       />
       <Select
         disabled
-        required
+        required={props.required}
         label="Condition"
         placeholder="Choose a condition..."
         options={props.condition}
@@ -228,7 +229,7 @@ const ItemConfirmation: React.FC<ItemConfirmationProps> = (props) => {
       </div>
       <InputLabel
         disabled
-        required
+        required={props.required}
         label="Name"
         placeholder="Enter name"
         extra={
@@ -240,7 +241,7 @@ const ItemConfirmation: React.FC<ItemConfirmationProps> = (props) => {
       />
       <InputLabel
         disabled
-        required
+        required={props.required}
         label="Short Name (16 Chars)"
         placeholder="Enter short name"
         maxLength={16}

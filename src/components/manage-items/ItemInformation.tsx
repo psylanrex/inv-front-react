@@ -14,6 +14,7 @@ import {
 } from "react-hook-form";
 
 type ItemInformationProps = {
+  required?: boolean;
   categories: { value: string; title: string }[];
   condition: { value: string; title: string }[];
   brand: { value: string; title: string }[];
@@ -27,7 +28,7 @@ const ItemInformation: React.FC<ItemInformationProps> = (props) => {
   return (
     <>
       <InputLabel
-        required
+        required={props.required}
         label="Item Code"
         placeholder="Enter item code"
         minLength={5}
@@ -42,7 +43,7 @@ const ItemInformation: React.FC<ItemInformationProps> = (props) => {
           <InputGroup.Prefix>$</InputGroup.Prefix>
           <InputGroup.Body>
             <Input
-              required
+              required={props.required}
               step={0.01}
               placeholder="0.00"
               type="number"
@@ -53,21 +54,21 @@ const ItemInformation: React.FC<ItemInformationProps> = (props) => {
         </InputGroup>
       </div>
       <Select
-        required
+        required={props.required}
         label="Category"
         placeholder="Choose a category..."
         options={props.categories}
         {...props.register("category")}
       />
       <Select
-        required
+        required={props.required}
         label="Condition"
         placeholder="Choose a condition..."
         options={props.condition}
         {...props.register("condition")}
       />
       <Select
-        required
+        required={props.required}
         label="Brand"
         placeholder="None"
         options={props.brand}
