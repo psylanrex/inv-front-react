@@ -9,6 +9,8 @@ import { useCallback } from "react";
 import to from "await-to-js";
 import { InvoiceData, cancelInvoice, getPendingInvoices } from "@/api/invoice";
 import Spin from "@/components/reactdash-ui/Spin";
+import { invoiceFinishLink } from "@/utils/utils";
+import { useNavigate } from "react-router-dom";
 
 const table_title = {
   id: "Invoice ID",
@@ -30,6 +32,7 @@ type DataPendingInvoiceTable = {
 };
 
 const PendingInvoiceTable = () => {
+  const navigate = useNavigate();
   const [state, setState] = useSetState<DataPendingInvoiceTable>({
     loading: false,
     keyword: "",
@@ -127,7 +130,7 @@ const PendingInvoiceTable = () => {
                       color="primary"
                       size="small"
                       onClick={() => {
-                        // navigate(purcharseDetailLink("open", order.id));
+                        navigate(invoiceFinishLink(invoice.id));
                       }}
                     >
                       View / Finish

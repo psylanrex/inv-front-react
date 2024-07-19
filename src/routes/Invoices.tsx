@@ -10,6 +10,7 @@ import {
   ReceivedInvoices,
   CancelledInvoices,
   InvoiceDetails,
+  InvoiceFinish,
 } from "@/pages/invoices/";
 
 export default function Invoices() {
@@ -22,6 +23,7 @@ export default function Invoices() {
         <Route path="/received/*" element={<ReceivedInvoices />} />
         <Route path="/cancelled/*" element={<CancelledInvoices />} />
         <Route path="/details/:invoice_id" element={<InvoiceDetails />} />
+        <Route path="/finish/:invoice_id" element={<InvoiceFinish />} />
       </Routes>
     </AdminLayout>
   );

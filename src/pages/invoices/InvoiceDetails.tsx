@@ -9,26 +9,20 @@ import {
   Row,
 } from "@/components/reactdash-ui";
 import Spin from "@/components/reactdash-ui/Spin";
-import { currencyFormatter } from "@/utils/utils";
+import { currencyFormatter, invoicePrintLink } from "@/utils/utils";
 import { useAsyncEffect, useSetState } from "ahooks";
 import to from "await-to-js";
-import { useRef } from "react";
 import { Pass, Printer } from "react-bootstrap-icons";
 import { useParams } from "react-router-dom";
-import { useReactToPrint } from "react-to-print";
 
-type DataInvoiceDetail = {
+type StateInvoiceDetail = {
   data?: InvoiceDetail;
   loading: boolean;
 };
 
 const InvoiceDetails = () => {
   const params = useParams();
-  const componentRef = useRef(null);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-  const [state, setState] = useSetState<DataInvoiceDetail>({
+  const [state, setState] = useSetState<StateInvoiceDetail>({
     data: undefined,
     loading: false,
   });
@@ -44,7 +38,7 @@ const InvoiceDetails = () => {
   return (
     <Preloader>
       <Spin loading={state.loading}>
-        <div ref={componentRef}>
+        <div>
           {/* page title */}
           <Row>
             <Column className="w-full px-4">
@@ -59,7 +53,9 @@ const InvoiceDetails = () => {
                 </Column>
                 <Button
                   className="inline-flex items-center no-print"
-                  onClick={handlePrint}
+                  onClick={() =>
+                    window.open(invoicePrintLink(state.data?.invoice?.id ?? 0))
+                  }
                 >
                   <Printer className="mr-1 w-4 h-4" /> Print Invoice Label
                 </Button>

@@ -53,6 +53,14 @@ export const invoiceDetailLink = (id: number) => {
   return `/invoices/details/${id}`;
 };
 
+export const invoiceFinishLink = (id: number) => {
+  return `/invoices/finish/${id}`;
+};
+
+export const invoicePrintLink = (id: number) => {
+  return `/invoice/${id}`;
+};
+
 export const logoData = { img: "/img/logo.png", text: "Invitory", url: "#" };
 export const footerCopyright = `Copyright © 2001 - ${dayjs().year()}. Serrf Corp`;
 export const loginLink = "/impersonate";

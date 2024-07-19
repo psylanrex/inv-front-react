@@ -152,6 +152,21 @@ export type InvoiceDetail = {
   returned: ReturnedItem[];
 };
 
+export type InvoiceFinishData = {
+  grand_total: string;
+  invoice: InvoiceData;
+  item_count: number;
+  items: InvoiceItem[];
+  landed_count: number;
+  landed_grand_total: string;
+  returned: ReturnedItem[];
+};
+
+export type InvoicePrintData = {
+  invoice: InvoiceData;
+  message: string;
+};
+
 export const getPendingInvoices = async (): Promise<InvoiceData[]> => {
   const res = await API.get(`api/invoices/pending`);
   return res.data;
@@ -179,5 +194,24 @@ export const cancelInvoice = async (id: number) => {
 
 export const getInvoiceDetails = async (id: string): Promise<InvoiceDetail> => {
   const res = await API.get(`api/invoices/details/${id}`);
+  return res.data;
+};
+
+export const getInvoicePrint = async (
+  id: string
+): Promise<InvoicePrintData> => {
+  const res = await API.get(`api/invoices/print/${id}`);
+  return res.data;
+};
+
+export const getInvoiceFinish = async (
+  id: string
+): Promise<InvoiceFinishData> => {
+  const res = await API.get(`api/invoices/finish/${id}`);
+  return res.data;
+};
+
+export const createInvoiceFinish = async (id: string, body) => {
+  const res = await API.post(`api/invoices/finish/${id}`, body);
   return res.data;
 };
