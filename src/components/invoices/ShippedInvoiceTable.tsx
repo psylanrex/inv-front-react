@@ -97,8 +97,13 @@ const ShippedInvoiceTable = () => {
 
           <tbody>
             {currentData.map((invoice, id) => {
+              const classRow =
+                id % 2 === 0
+                  ? ""
+                  : "bg-gray-100 dark:bg-gray-900 dark:bg-opacity-40";
+
               return (
-                <tr key={id}>
+                <tr key={id} className={classRow}>
                   <td>
                     <div className="leading-5">{invoice.id}</div>
                   </td>
