@@ -60,6 +60,12 @@ const ReceivedInvoiceTable = () => {
     );
   });
 
+  // slice data_table
+  const sliceData = currentData.slice(
+    (state.currentPage - 1) * state.perPage,
+    (state.currentPage - 1) * state.perPage + state.perPage
+  );
+
   // page changed
   const onPageChanged = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, page: number) => {
@@ -96,7 +102,7 @@ const ReceivedInvoiceTable = () => {
           </thead>
 
           <tbody>
-            {currentData.map((invoice, id) => {
+            {sliceData.map((invoice, id) => {
               const classRow =
                 id % 2 === 0
                   ? ""

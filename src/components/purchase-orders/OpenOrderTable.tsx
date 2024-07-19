@@ -68,26 +68,27 @@ export default function OpenOrderTable() {
   }, []);
 
   // slice data_table
-  const currentData = state.products
-    .filter((product) => {
-      if (!state.keyword) return true;
+  const currentData = state.products.filter((product) => {
+    if (!state.keyword) return true;
 
-      const regex = new RegExp(state.keyword, "i");
-      return (
-        regex.test(product.purchase_order_number) ||
-        regex.test(product.purchase_order_date) ||
-        regex.test(product.purchase_order_status) ||
-        regex.test(product.invoice_window_end) ||
-        regex.test(product.quantity) ||
-        regex.test(product.received) ||
-        regex.test(product.missing) ||
-        regex.test(product.total)
-      );
-    })
-    .slice(
-      (state.currentPage - 1) * state.perPage,
-      (state.currentPage - 1) * state.perPage + state.perPage
+    const regex = new RegExp(state.keyword, "i");
+    return (
+      regex.test(product.purchase_order_number) ||
+      regex.test(product.purchase_order_date) ||
+      regex.test(product.purchase_order_status) ||
+      regex.test(product.invoice_window_end) ||
+      regex.test(product.quantity) ||
+      regex.test(product.received) ||
+      regex.test(product.missing) ||
+      regex.test(product.total)
     );
+  });
+
+  // slice data_table
+  const sliceData = currentData.slice(
+    (state.currentPage - 1) * state.perPage,
+    (state.currentPage - 1) * state.perPage + state.perPage
+  );
 
   // page changed
   const onPageChanged = useCallback(
@@ -125,7 +126,7 @@ export default function OpenOrderTable() {
           </thead>
 
           <tbody>
-            {currentData.map((order, id) => {
+            {sliceData.map((order, id) => {
               const classRow =
                 id % 2 === 0
                   ? ""

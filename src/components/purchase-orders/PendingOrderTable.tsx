@@ -72,24 +72,25 @@ export default function PendingOrderTable() {
   }, []);
 
   // slice data_table
-  const currentData = state.products
-    .filter((product) => {
-      if (!state.keyword) return true;
+  const currentData = state.products.filter((product) => {
+    if (!state.keyword) return true;
 
-      const regex = new RegExp(state.keyword, "i");
-      return (
-        regex.test(product.purchase_order_number) ||
-        regex.test(product.purchase_order_date) ||
-        regex.test(product.approval_deadline) ||
-        regex.test(product.quantity) ||
-        regex.test(product.total) ||
-        regex.test(`${product.term_period}`)
-      );
-    })
-    .slice(
-      (state.currentPage - 1) * state.perPage,
-      (state.currentPage - 1) * state.perPage + state.perPage
+    const regex = new RegExp(state.keyword, "i");
+    return (
+      regex.test(product.purchase_order_number) ||
+      regex.test(product.purchase_order_date) ||
+      regex.test(product.approval_deadline) ||
+      regex.test(product.quantity) ||
+      regex.test(product.total) ||
+      regex.test(`${product.term_period}`)
     );
+  });
+
+  // slice data_table
+  const sliceData = currentData.slice(
+    (state.currentPage - 1) * state.perPage,
+    (state.currentPage - 1) * state.perPage + state.perPage
+  );
 
   // page changed
   const onPageChanged = useCallback(
@@ -127,7 +128,7 @@ export default function PendingOrderTable() {
           </thead>
 
           <tbody>
-            {currentData.map((order, id) => {
+            {sliceData.map((order, id) => {
               const classRow =
                 id % 2 === 0
                   ? ""

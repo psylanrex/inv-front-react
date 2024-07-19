@@ -52,7 +52,7 @@ const PendingInvoiceTable = () => {
     await fetchPendingInvoice();
   }, []);
 
-  // slice data_table
+  // filter data_table
   const currentData = state.invoices.filter((invoice) => {
     if (!state.keyword) return true;
 
@@ -64,6 +64,12 @@ const PendingInvoiceTable = () => {
       regex.test(invoice.create_time)
     );
   });
+
+  // slice data_table
+  const sliceData = currentData.slice(
+    (state.currentPage - 1) * state.perPage,
+    (state.currentPage - 1) * state.perPage + state.perPage
+  );
 
   // page changed
   const onPageChanged = useCallback(
@@ -101,7 +107,7 @@ const PendingInvoiceTable = () => {
           </thead>
 
           <tbody>
-            {currentData.map((invoice, id) => {
+            {sliceData.map((invoice, id) => {
               const classRow =
                 id % 2 === 0
                   ? ""
