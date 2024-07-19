@@ -29,8 +29,6 @@ const InvoiceFinish = () => {
     setState({ data, loading: false });
   }, [params]);
 
-  console.log(state.data);
-
   return (
     <Preloader>
       <Spin loading={state.loading}>
