@@ -10,7 +10,7 @@ import {
 } from "@/components/reactdash-ui";
 import OwedEarningTable from "@/components/earnings/OwedEarningTable";
 
-export default function OwedEarnings() {
+const OwedEarnings = () => {
   return (
     <Preloader>
       {/* page title  */}
@@ -46,7 +46,7 @@ export default function OwedEarnings() {
               </div>
               <Select
                 className="items-center !mb-0"
-                layout="horizontal"
+                selectClassName="h-full"
                 name="filter"
                 id="filter"
                 placeholder="All"
@@ -81,4 +81,6 @@ export default function OwedEarnings() {
       </Row>
     </Preloader>
   );
-}
+};
+
+export default OwedEarnings;

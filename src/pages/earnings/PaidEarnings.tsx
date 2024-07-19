@@ -9,7 +9,7 @@ import {
 } from "@/components/reactdash-ui";
 import PaidEarningTable from "@/components/earnings/PaidEarningTable";
 
-export default function PaidEarnings() {
+const PaidEarnings = () => {
   return (
     <Preloader>
       {/* page title  */}
@@ -59,4 +59,6 @@ export default function PaidEarnings() {
       </Row>
     </Preloader>
   );
-}
+};
+
+export default PaidEarnings;
