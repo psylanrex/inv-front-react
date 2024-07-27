@@ -4,6 +4,8 @@ import { PurchaseOrderItem } from "@/api/purchase-orders";
 import Spin from "@/components/reactdash-ui/Spin";
 import { currencyFormatter } from "@/utils/utils";
 
+const { VITE_INVITORY_IMAGE } = import.meta.env;
+
 const table_title = {
   image: "Image",
   item_code: "Item Code",
@@ -82,9 +84,7 @@ const PendingOrderDetailTable: React.FC<PendingOrderDetailTableProps> = (
 
               // image type id 5 or 6 (HD 24 or 25)
               const image_type_id = 5;
-              const src = `${import.meta.env.VITE_INVITORY_IMAGE}/${
-                order.category_id
-              }/${image_type_id}/${order.id}.jpg`;
+              const src = `${VITE_INVITORY_IMAGE}/${order.category_id}/${image_type_id}/${order.id}.jpg`;
 
               return (
                 <tr key={id} className={classRow}>

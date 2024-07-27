@@ -1,6 +1,6 @@
 import API from "../utils/request";
 
-type PurchaseOrder = {
+export type PurchaseOrder = {
   id: number;
   employee_id: string;
   purchase_order_detail_id: number;

@@ -5,6 +5,8 @@ import Spin from "@/components/reactdash-ui/Spin";
 import { useEffect, useState } from "react";
 import { currencyFormatter } from "@/utils/utils";
 
+const { VITE_INVITORY_IMAGE } = import.meta.env;
+
 const table_title = {
   image: "Image",
   item_code: "Item Code",
@@ -163,9 +165,7 @@ const ItemDetailOrder: React.FC<{
 
   // image type id 5 or 6 (HD 24 or 25)
   const image_type_id = 5;
-  const src = `${
-    import.meta.env.VITE_INVITORY_IMAGE
-  }/${category_id}/${image_type_id}/${id}.jpg`;
+  const src = `${VITE_INVITORY_IMAGE}/${category_id}/${image_type_id}/${id}.jpg`;
 
   return (
     <tr key={props.id} className={props.classRow}>

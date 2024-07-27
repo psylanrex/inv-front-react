@@ -23,6 +23,7 @@ import { accountProfile } from "@/api/account";
 import { getAccessToken } from "@/utils/utils";
 import to from "await-to-js";
 import { updateProfile } from "@/slices/profileSlice";
+import { InvoicePrint } from "@/pages/invoices";
 
 type RouteData = {
   path: string;
@@ -48,6 +49,7 @@ export default function App() {
     { path: "/earnings/*", element: <Earnings /> },
     { path: "/support", element: <Support /> },
     { path: "/faq", element: <Faq /> },
+    { path: "/invoice/:invoice_id", element: <InvoicePrint /> },
     { path: "/impersonate/:vendor_id", element: <Navigate to="/dashboard" /> },
   ];
   const loginRoutes = [
