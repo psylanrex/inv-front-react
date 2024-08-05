@@ -17,6 +17,7 @@ type ButtonProps = {
   children?: React.ReactNode;
   shape?: keyof typeof ENUM_SHAPE;
   type?: keyof typeof ENUM_BUTTON_TYPE;
+  hidden?: boolean;
   disabled?: boolean;
 };
 
@@ -33,6 +34,7 @@ export default function Button(props: ButtonProps) {
   const addClass = props.className ? `${props.className} ` : "";
   const addClassDisabled = props.disabled ? "opacity-50" : "";
 
+  if (props.hidden) return null;
   return (
     <button
       disabled={props.disabled}

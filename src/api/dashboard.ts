@@ -2,6 +2,8 @@ import { DashboardState } from "@/layouts/dashboard/Dashboard";
 import API from "../utils/request";
 import { DataReturnRate } from "@/layouts/dashboard/ReturnedRate";
 import { DataDamagedItems } from "@/layouts/dashboard/DamagedItems";
+import { DataBadRating } from "@/layouts/dashboard/BadRating";
+import { DataGoodRating } from "@/layouts/dashboard/GoodRating";
 
 export const dashboardInfo = async (): Promise<DashboardState> => {
   const res = await API.get(`api/dashboard`);
@@ -18,12 +20,12 @@ export const dashboardDamagedItems = async (): Promise<DataDamagedItems> => {
   return res.data;
 };
 
-export const dashboardBadRating = async () => {
+export const dashboardBadRating = async (): Promise<DataBadRating> => {
   const res = await API.get(`api/dashboard/bad-rating`);
   return res.data;
 };
 
-export const dashboardGoodRating = async () => {
+export const dashboardGoodRating = async (): Promise<DataGoodRating> => {
   const res = await API.get(`api/dashboard/good-rating`);
   return res.data;
 };

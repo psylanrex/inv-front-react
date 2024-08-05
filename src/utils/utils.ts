@@ -1,5 +1,6 @@
 import { ENUM_PURCHASE_ORDER } from "@/utils/utils.enum";
 import dayjs from "dayjs";
+import ReactDOMServer from "react-dom/server";
 
 export const getAccessToken = () => {
   const token = localStorage.getItem("accessToken");
@@ -28,6 +29,17 @@ export const removeVendorId = () => {
 export const getVendorId = () => {
   const vendorId = localStorage.getItem("vendorId");
   return vendorId ? parseInt(vendorId) : undefined;
+};
+
+export const isQuillEmpty = (value: string) => {
+  if (value.replace(/<(.|\n)*?>/g, "").trim().length === 0) {
+    return true;
+  }
+  return false;
+};
+
+export const isChildNull = (children: React.ReactNode) => {
+  return !Boolean(ReactDOMServer.renderToStaticMarkup(children));
 };
 
 export const currencyFormatter = new Intl.NumberFormat("en-US", {
