@@ -35,13 +35,7 @@ const InvoiceInformation: React.FC<InvoiceInformationProps> = (props) => {
     if (!params.invoice_id) return;
     setLoading(true);
 
-    const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    formData.append("invoice_id", params.invoice_id);
-
-    const [err] = await to(createInvoiceFinish(params.invoice_id, formData));
+    const [err] = await to(createInvoiceFinish(params.invoice_id, data));
     if (err) {
       setLoading(false);
       return toast.error((err as any)?.response?.data?.message);
