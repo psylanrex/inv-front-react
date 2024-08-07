@@ -1,4 +1,4 @@
-import { createInvoiceFinish } from "@/api/invoice";
+import { InvoiceFinishData, createInvoiceFinish } from "@/api/invoice";
 import { Button, InputLabel, Row, Select } from "@/components/reactdash-ui";
 import { invoiceDetailLink } from "@/utils/utils";
 import to from "await-to-js";
@@ -12,25 +12,18 @@ type FormInvoiceInformation = {
   ship_date: string;
   invoice_number: string;
   tracking_number: string;
-  shipping_method_id: string;
+  ship_method_id: string;
   expected_landing_date: string;
   freight_cost_in: string;
   import_fee: string;
   sales_tax: string;
 };
 
-const shipping_method_options = [
-  { value: "UPS", title: "UPS" },
-  { value: "FEDEX", title: "FEDEX" },
-  { value: "USPOSTAL", title: "USPOSTAL" },
-  { value: "SHIPHOLD", title: "SHIPHOLD" },
-  { value: "PENDING", title: "PENDING" },
-  { value: "BESTYE1", title: "BESTYE1" },
-  { value: "WILLCALL", title: "WILLCALL" },
-  { value: "DUMP", title: "DUMP" },
-];
+type InvoiceInformationProps = {
+  data?: InvoiceFinishData;
+};
 
-const InvoiceInformation = () => {
+const InvoiceInformation: React.FC<InvoiceInformationProps> = (props) => {
   const params = useParams();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<FormInvoiceInformation>({
@@ -40,14 +33,15 @@ const InvoiceInformation = () => {
 
   const onSubmit = async (data: FormInvoiceInformation) => {
     if (!params.invoice_id) return;
-
     setLoading(true);
-    const [err] = await to(
-      createInvoiceFinish(params.invoice_id, {
-        ...data,
-        invoice_id: params.invoice_id,
-      })
-    );
+
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    formData.append("invoice_id", params.invoice_id);
+
+    const [err] = await to(createInvoiceFinish(params.invoice_id, formData));
     if (err) {
       setLoading(false);
       return toast.error((err as any)?.response?.data?.message);
@@ -93,11 +87,14 @@ const InvoiceInformation = () => {
             />
             <Select
               required
-              id="shipping_method_id"
+              id="ship_method_id"
               label="Shipping Method"
               placeholder="Enter shipping method"
-              options={shipping_method_options}
-              {...register("shipping_method_id")}
+              options={(props.data?.ship_methods ?? []).map((method) => ({
+                value: method.id.toString(),
+                title: method.ship_method,
+              }))}
+              {...register("ship_method_id")}
             />
           </div>
           <div>
