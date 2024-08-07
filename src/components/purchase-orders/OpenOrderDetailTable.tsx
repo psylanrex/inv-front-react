@@ -118,6 +118,7 @@ const OpenOrderDetailTable: React.FC<OpenOrderDetailTableProps> = (props) => {
 
               return (
                 <ItemDetailOrder
+                  key={id}
                   id={id}
                   disabledCheckbox={disabledCheckbox}
                   classRow={classRow}

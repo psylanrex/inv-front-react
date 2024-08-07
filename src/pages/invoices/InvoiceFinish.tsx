@@ -53,7 +53,7 @@ const InvoiceFinish = () => {
           <Row className="mb-5">
             <Column className="w-full px-4">
               <Card className="relative p-6">
-                <InvoiceInformation />
+                <InvoiceInformation data={state.data} />
               </Card>
             </Column>
           </Row>

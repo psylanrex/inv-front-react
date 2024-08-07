@@ -142,6 +142,11 @@ export type ReturnedItem = {
   create_time: string;
 };
 
+type ShipMethod = {
+  id: number;
+  ship_method: string;
+};
+
 export type InvoiceDetail = {
   grand_total: string;
   invoice: InvoiceData;
@@ -150,6 +155,7 @@ export type InvoiceDetail = {
   landed_count: number;
   landed_grand_total: string;
   returned: ReturnedItem[];
+  ship_methods: ShipMethod[];
 };
 
 export type InvoiceFinishData = {
@@ -160,6 +166,7 @@ export type InvoiceFinishData = {
   landed_count: number;
   landed_grand_total: string;
   returned: ReturnedItem[];
+  ship_methods: ShipMethod[];
 };
 
 export type InvoicePrintData = {
